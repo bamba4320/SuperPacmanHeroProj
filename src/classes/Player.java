@@ -4,40 +4,44 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class Player implements Runnable {
+public class Player extends Thread {
 
 	// the game panel
-	private GamePanel gp;
+	GamePanel gp;
 	// the player coordinates
-	private int x;
-	private int y;
+	int x;
+	int y;
 	
 	// player appearance
-	private Image playerLook;
+	Image playerLook;
+	
+	// player relative width and height
+	int size;
 	
 	// TODO: add array of items for buffs and debuffs
 	
 	// player strength, might and will be effected during game 
-	private double power;
+	double power;
 	
 	// player health points
-	private int hp;
+	int hp;
 	
 	// how many tries the player has until game over
-	private int lives;
+	int lives;
 	
 	/**
 	 * Player class constructor
 	 */
-	public Player(GamePanel gp) {
-		this.gp = gp;
-		this.x = 500;
-		this.y = 1600;
-		this.power = 1;
-		this.lives = 3;
-		this.hp = 200;
-		ImageIcon ii = new ImageIcon("/images/base_player");
-		this.playerLook = ii.getImage();
+	public Player(GamePanel gamePanel, int playerSize) {
+		gp = gamePanel;
+		x = 500;
+		y = 500;
+		size = playerSize;
+		power = 1;
+		lives = 3;
+		hp = 200;
+		playerLook = new ImageIcon("static/images/iron-fist.png").getImage();
+		start();
 	}
 
 	/**
@@ -45,7 +49,7 @@ public class Player implements Runnable {
 	 * @return players x value
 	 */
 	public int getX() {
-		return this.x;
+		return x;
 	}
 	
 	/**
@@ -53,7 +57,7 @@ public class Player implements Runnable {
 	 * @return players y value
 	 */
 	public int getY() {
-		return this.y;
+		return y;
 	}
 	
 	/**
@@ -62,7 +66,7 @@ public class Player implements Runnable {
 	 * 			    To move right => add: positive value;  
 	 */
 	public void updateX(int add) {
-		this.x += add;
+		x += add;
 	}
 	/**
 	 * Update player y coordinate
@@ -70,13 +74,32 @@ public class Player implements Runnable {
 	 * 			    To move down => add: positive value;  
 	 */
 	public void updateY(int add) {
-		this.y += add;
+		y += add;
 	}
 	
+	/**
+	 * an auto-execute function that get called from start()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		
+		while(true)
+		{
+		
+		   try {
+			Thread.sleep(100);
+		      } catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			 e.printStackTrace();
+		    }
+			
+			gp.repaint();
+		}	
+	}
+	
+	public void drawPlayer(Graphics g){
+		g.drawImage(playerLook,x,y,size,size, null);
 	}
 	
 }
