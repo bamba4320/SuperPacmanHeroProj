@@ -12,6 +12,8 @@ public class Player extends Thread {
 	int x;
 	int y;
 	
+	boolean isFacingRight;
+	
 	// player appearance
 	Image playerLook;
 	
@@ -40,7 +42,8 @@ public class Player extends Thread {
 		power = 1;
 		lives = 3;
 		hp = 200;
-		playerLook = new ImageIcon("static/images/iron-fist.png").getImage();
+		isFacingRight = true;
+		playerLook = new ImageIcon("static/images/iron-fist-left.png").getImage();
 		start();
 	}
 
@@ -67,6 +70,12 @@ public class Player extends Thread {
 	 */
 	public void updateX(int add) {
 		x += add;
+		if(add<0 && isFacingRight) {
+			flipPlayer(false);
+		}
+		if(add>0 && !isFacingRight) {
+			flipPlayer(true);
+		}
 	}
 	/**
 	 * Update player y coordinate
@@ -100,6 +109,22 @@ public class Player extends Thread {
 	
 	public void drawPlayer(Graphics g){
 		g.drawImage(playerLook,x,y,size,size, null);
+	}
+	
+	/**
+	 * flip the player image
+	 * @param direction false-change to left, true- change to right
+	 */
+	private void flipPlayer(boolean direction) {
+		
+		if(isFacingRight && !direction ) {
+			playerLook = new ImageIcon("static/images/iron-fist-left.png").getImage();
+			isFacingRight = false;
+		}
+		if(!isFacingRight && direction) {
+			playerLook = new ImageIcon("static/images/iron-fist-right.png").getImage();
+			isFacingRight = true;
+		}
 	}
 	
 }
