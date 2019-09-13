@@ -2,6 +2,8 @@ package classes;
 
 import java.awt.*;
 
+import javax.swing.ImageIcon;
+
 public class Shot extends Thread {
 	GamePanel gp;
 	Image shotLook;
@@ -71,6 +73,7 @@ public class Shot extends Thread {
 	private void setImage(Direction d) {
 		switch(d) {
 		case EAST:
+			shotLook = new ImageIcon("static/images/fists/fist-east").getImage();
 			break;
 		case NORTH_EAST:
 			break;
