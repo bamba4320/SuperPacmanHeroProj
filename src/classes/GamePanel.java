@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
+enum Direction{
+	EAST,NORTH_EAST,NORTH,NORTH_WEST,WEST,SOUTH_WEST,SOUTH,SOUTH_EAST
+}
 
 public class GamePanel extends JPanel{
 
@@ -42,16 +45,16 @@ public class GamePanel extends JPanel{
 			
 				int code=e.getKeyCode();
 				if(code==KeyEvent.VK_RIGHT) {
-					player.updateX(20);
+					player.updateX(10);
 				}
 				if(code==KeyEvent.VK_LEFT) {
-					player.updateX(-20);
+					player.updateX(-10);
 				}
 				if(code==KeyEvent.VK_UP) {
-					player.updateY(-20);
+					player.updateY(-10);
 				}
 				if(code==KeyEvent.VK_DOWN) {
-					player.updateY(20);
+					player.updateY(10);
 				}
 				
 			}
@@ -78,7 +81,7 @@ public class GamePanel extends JPanel{
 		GamePanel bp=new GamePanel();
 		f.add(bp);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1024,700);
+		f.setSize(1650,1000);
 		f.setResizable(false);
 		f.setVisible(true);	
 		f.setFocusable(false);
