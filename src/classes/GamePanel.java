@@ -18,7 +18,7 @@ public class GamePanel extends JPanel{
 	Image backGroundImage;
 	
 	public GamePanel(){
-		ImageIcon ii =new ImageIcon("static/images/main_background.jpg");
+		ImageIcon ii =new ImageIcon("static/images/backgrounds/main_background.jpg");
 		backGroundImage= ii.getImage();
 		player = new Player(this, 100);
 		addKeyListener(new KL ());

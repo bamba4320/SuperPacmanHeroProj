@@ -64,6 +64,10 @@ public class Shot extends Thread {
 		
 	}
 	
+	/**
+	 * Set the shot image base on direction
+	 * @param d: the Direction of the shot
+	 */
 	private void setImage(Direction d) {
 		switch(d) {
 		case EAST:

@@ -43,7 +43,7 @@ public class Player extends Thread {
 		lives = 3;
 		hp = 200;
 		isFacingRight = true;
-		playerLook = new ImageIcon("static/images/iron-fist-left.png").getImage();
+		playerLook = new ImageIcon("static/images/characters/iron-fist-right.png").getImage();
 		start();
 	}
 
@@ -118,11 +118,11 @@ public class Player extends Thread {
 	private void flipPlayer(boolean direction) {
 		
 		if(isFacingRight && !direction ) {
-			playerLook = new ImageIcon("static/images/iron-fist-left.png").getImage();
+			playerLook = new ImageIcon("static/images/characters/iron-fist-left.png").getImage();
 			isFacingRight = false;
 		}
 		if(!isFacingRight && direction) {
-			playerLook = new ImageIcon("static/images/iron-fist-right.png").getImage();
+			playerLook = new ImageIcon("static/images/characters/iron-fist-right.png").getImage();
 			isFacingRight = true;
 		}
 	}
