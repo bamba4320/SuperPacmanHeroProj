@@ -20,6 +20,7 @@ public class GamePanel extends JPanel{
 	Image backGroundImage;
 	ArrayList<Shot> shots;
 	boolean isMoved;
+	MovementDetector movementDetector;
 	
 	/**
 	 * Constractor
@@ -55,13 +56,22 @@ public class GamePanel extends JPanel{
 	 */
 	private void drawShots(Graphics g) {
 		for(Shot s : shots){
-			if(s.isAlive) {
-				s.drawShot(g);	
+			try {
+				if(s.isAlive && s != null) {
+					s.drawShot(g);	
+				}
+			}catch(Exception e) {
+				
 			}
-			else {
-				shots.remove(s);
+		}
+		
+		for(Shot s : shots){
+			try {
+				if(!s.isAlive && s != null) {
+					shots.remove(s);	
+				}
+			}catch(Exception e) {		
 			}
-			
 		}
 	}
 	
@@ -122,12 +132,22 @@ public class GamePanel extends JPanel{
 		setCursor(blankCursor);	
 	}
 	
-	private synchronized void startMovementDetector() {
-		isMoved = true;
-		MovementDetector md = new MovementDetector();
-		while(md.isAlive());
-		isMoved = false;
-		
+	/**
+	 * work with the movement detector
+	 */
+	private void startMovementDetector() {
+		if(movementDetector == null) {
+			movementDetector = new MovementDetector(this);
+		}else {
+			
+			if(!movementDetector.isAlive()) {
+				movementDetector = null;
+			}
+		}
+	}
+	
+	public void setIsMoved(boolean val) {
+		isMoved = val;
 	}
 
 	/**

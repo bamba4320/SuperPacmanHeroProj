@@ -33,6 +33,9 @@ public class Player extends Thread {
 	// how many tries the player has until game over
 	int lives;
 	
+	// does the player able to shoot
+	boolean recoilTime;
+	
 	/**
 	 * Player class constructor
 	 */
@@ -45,6 +48,7 @@ public class Player extends Thread {
 		lives = 3;
 		hp = 200;
 		isFacingRight = true;
+		recoilTime = false;
 		playerLook = new ImageIcon("static/images/characters/iron-fist-right.png").getImage();
 		start();
 	}
@@ -99,17 +103,19 @@ public class Player extends Thread {
 		{
 		
 		   try {
-			Thread.sleep(25);
+			Thread.sleep(50);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			 e.printStackTrace();
 		    }
 		    
 		    if(!didMoved()) {
-		    	MakeShot();
+		    	if(!recoilTime) {
+		    		makeShot();
+		    	}
 		    }
 			gp.repaint();
-		}	
+		}
 	}
 	
 	public void drawPlayer(Graphics g){
@@ -143,7 +149,7 @@ public class Player extends Thread {
 	/**
 	 * make a new shot
 	 */
-	private void MakeShot() {
+	private void makeShot() {
 		gp.addShot(new Shot(gp,x,y,size/2,setHitPower(),setDirection()));
 	}
 	
