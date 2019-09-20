@@ -13,11 +13,13 @@ public class Shot extends Thread {
 	double hitPower;
 	int deltax;
 	int deltay;
+	boolean isAlive;
 	
 	public Shot(GamePanel gamePanel,int initx, int inity, int initsize, double hit, Direction d, int size) {
 		gp = gamePanel;
 		x = initx;
 		y = inity;
+		isAlive = true;
 		this.size = size;
 		setDelta(d);
 		setImage(d);
@@ -115,6 +117,10 @@ public class Shot extends Thread {
 			// TODO Auto-generated catch block
 			 e.printStackTrace();
 		    }
+		   	if(doKillShot()) {
+		   		isAlive = false;
+		   		break;
+		   	}
 			
 			gp.repaint();
 		}	
@@ -122,5 +128,9 @@ public class Shot extends Thread {
 	
 	public void drawShot(Graphics g){
 		g.drawImage(shotLook,x,y,size,size, null);
+	}
+	
+	private boolean doKillShot() {
+		return x == 0 || x == gp.getWidth() || y == 0 || y==gp.getHeight();
 	}
 }

@@ -38,7 +38,13 @@ public class GamePanel extends JPanel{
 		
 		player.drawPlayer(g);
 		for(Shot s : shots){
-			s.drawShot(g);
+			if(s.isAlive) {
+				s.drawShot(g);	
+			}
+			else {
+				shots.remove(s);
+			}
+			
 		}
 	
 		 
