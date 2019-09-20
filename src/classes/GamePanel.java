@@ -37,6 +37,10 @@ public class GamePanel extends JPanel{
 		g.drawImage(backGroundImage, 0,0,getWidth(),getHeight(), null);
 		
 		player.drawPlayer(g);
+		drawShots(g);
+	}
+	
+	private void drawShots(Graphics g) {
 		for(Shot s : shots){
 			if(s.isAlive) {
 				s.drawShot(g);	
@@ -46,10 +50,7 @@ public class GamePanel extends JPanel{
 			}
 			
 		}
-	
-		 
 	}
-
 		
 		 class KL extends KeyAdapter
 	     {
