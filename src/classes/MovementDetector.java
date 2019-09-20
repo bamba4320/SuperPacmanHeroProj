@@ -11,9 +11,13 @@ public class MovementDetector extends Thread {
 	
 	public void run() {
 		try {
+				gp.movementDetectCounterUpdate(true);
 				gp.setIsMoved(true);
 				Thread.sleep(300);
-				gp.setIsMoved(false);
+				if(gp.movementDetectorsCounter == 1) {
+					gp.setIsMoved(false);
+				}
+				gp.movementDetectCounterUpdate(false);
 		}catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

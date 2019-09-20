@@ -147,10 +147,15 @@ public class Player extends Thread {
 	}
 	
 	/**
-	 * make a new shot
+	 * make a new shot and set recoil
 	 */
 	private void makeShot() {
 		gp.addShot(new Shot(gp,x,y,size/2,setHitPower(),setDirection()));
+		new RecoilMeter(this);
+	}
+	
+	public void setRecoil(boolean val) {
+		recoilTime = val;
 	}
 	
 	/**

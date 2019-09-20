@@ -20,7 +20,7 @@ public class GamePanel extends JPanel{
 	Image backGroundImage;
 	ArrayList<Shot> shots;
 	boolean isMoved;
-	MovementDetector movementDetector;
+	int movementDetectorsCounter;
 	
 	/**
 	 * Constractor
@@ -31,6 +31,7 @@ public class GamePanel extends JPanel{
 		player = new Player(this, 100);
 		shots = new ArrayList<Shot>();
 		isMoved = false;
+		movementDetectorsCounter = 0;
 		addKeyListener(new KL ());
 		setFocusable(true);
 		
@@ -136,14 +137,11 @@ public class GamePanel extends JPanel{
 	 * work with the movement detector
 	 */
 	private void startMovementDetector() {
-		if(movementDetector == null) {
-			movementDetector = new MovementDetector(this);
-		}else {
-			
-			if(!movementDetector.isAlive()) {
-				movementDetector = null;
-			}
-		}
+		new MovementDetector(this);
+	}
+	
+	public void movementDetectCounterUpdate(boolean add) {
+		movementDetectorsCounter += add ? 1 : -1;
 	}
 	
 	public void setIsMoved(boolean val) {

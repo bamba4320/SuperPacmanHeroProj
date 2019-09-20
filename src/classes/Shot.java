@@ -44,35 +44,35 @@ public class Shot extends Thread {
 		switch(d) {
 		case EAST:
 			deltay=0;
-			deltax=12;
+			deltax=20;
 			break;
 		case NORTH_EAST:
-			deltay=12;
-			deltax=12;
+			deltay=20;
+			deltax=20;
 			break;
 		case NORTH:
-			deltay=12;
+			deltay=20;
 			deltax=0;
 			break;
 		case NORTH_WEST:
-			deltay=12;
-			deltax=-12;
+			deltay=20;
+			deltax=-20;
 			break;
 		case WEST:
 			deltay=0;
-			deltax=-12;
+			deltax=-20;
 			break;
 		case SOUTH_WEST:
-			deltay=-12;
-			deltax=-12;
+			deltay=-20;
+			deltax=-20;
 			break;
 		case SOUTH:
-			deltay=-12;
+			deltay=-20;
 			deltax=0;
 			break;
 		case SOUTH_EAST:
-			deltay=-12;
-			deltax=12;
+			deltay=-20;
+			deltax=20;
 			break;
 			
 		}
@@ -122,7 +122,7 @@ public class Shot extends Thread {
 		{
 		
 		   try {
-			Thread.sleep(100);
+			Thread.sleep(30);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			 e.printStackTrace();
