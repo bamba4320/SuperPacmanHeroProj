@@ -19,6 +19,7 @@ public class GamePanel extends JPanel{
 	Player player;
 	Image backGroundImage;
 	ArrayList<Shot> shots;
+	boolean isMoved;
 	
 	/**
 	 * Constractor
@@ -28,8 +29,10 @@ public class GamePanel extends JPanel{
 		backGroundImage= ii.getImage();
 		player = new Player(this, 100);
 		shots = new ArrayList<Shot>();
+		isMoved = false;
 		addKeyListener(new KL ());
 		setFocusable(true);
+		
 	}
 	
 	/**
@@ -83,19 +86,24 @@ public class GamePanel extends JPanel{
 				int code=e.getKeyCode();
 				if(code==KeyEvent.VK_RIGHT) {
 					player.updateX(10);
+					startMovementDetector();
 				}
 				
 				if(code==KeyEvent.VK_LEFT) {
 					player.updateX(-10);
+					startMovementDetector();
 				}
 				
 				if(code==KeyEvent.VK_UP) {
 					player.updateY(-10);
+					startMovementDetector();
 				}
 				
 				if(code==KeyEvent.VK_DOWN) {
 					player.updateY(10);
+					startMovementDetector();
 				}
+				
 			}
 		}
 	
@@ -114,6 +122,13 @@ public class GamePanel extends JPanel{
 		setCursor(blankCursor);	
 	}
 	
+	private synchronized void startMovementDetector() {
+		isMoved = true;
+		MovementDetector md = new MovementDetector();
+		while(md.isAlive());
+		isMoved = false;
+		
+	}
 
 	/**
 	 * main program function. program starts here.

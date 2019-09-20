@@ -13,10 +13,7 @@ public class Player extends Thread {
 	int x;
 	int y;
 	
-	// last known coordinates, to check if moved
-	int lastX;
-	int lastY;
-	
+	// which way the player facing
 	boolean isFacingRight;
 	
 	// player appearance
@@ -74,7 +71,6 @@ public class Player extends Thread {
 	 * 			    To move right => add: positive value;  
 	 */
 	public void updateX(int add) {
-		lastX = x;
 		x += add;
 		if(add<0 && isFacingRight) {
 			flipPlayer(false);
@@ -89,7 +85,6 @@ public class Player extends Thread {
 	 * 			    To move down => add: positive value;  
 	 */
 	public void updateY(int add) {
-		lastY = y;
 		y += add;
 	}
 	
@@ -142,7 +137,7 @@ public class Player extends Thread {
 	 * @return did the player moved or not, boolean
 	 */
 	private boolean didMoved() {
-		return !(lastY==y) && !(lastX == x);
+		return gp.isMoved;
 	}
 	
 	/**
