@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
-public class Shot extends Thread {
+public class Shot extends Thread { 
 	GamePanel gp;
 	Image shotLook;
 	int x;
@@ -14,13 +14,14 @@ public class Shot extends Thread {
 	int deltax;
 	int deltay;
 	
-	public Shot(GamePanel gamePanel,int initx, int inity, int initsize, double hit, Direction d) {
+	public Shot(GamePanel gamePanel,int initx, int inity, int initsize, double hit, Direction d, int size) {
 		gp = gamePanel;
 		x = initx;
 		y = inity;
+		this.size = size;
 		setDelta(d);
 		setImage(d);
-		
+		start();
 	}
 	
 	/**
@@ -97,5 +98,29 @@ public class Shot extends Thread {
 			shotLook = new ImageIcon("static/images/fists/fist-south-east").getImage();
 			break;
 		}
+	}
+	/**
+	 * an auto-execute function that get called from start()
+	 */
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+		while(true)
+		{
+		
+		   try {
+			Thread.sleep(50);
+		      } catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			 e.printStackTrace();
+		    }
+			
+			gp.repaint();
+		}	
+	}
+	
+	public void drawShot(Graphics g){
+		g.drawImage(shotLook,x,y,size,size, null);
 	}
 }

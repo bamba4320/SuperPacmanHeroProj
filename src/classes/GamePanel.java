@@ -2,6 +2,8 @@ package classes;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 enum Direction{
@@ -16,11 +18,13 @@ public class GamePanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	Player player;
 	Image backGroundImage;
+	ArrayList<Shot> shots;
 	
 	public GamePanel(){
 		ImageIcon ii =new ImageIcon("static/images/backgrounds/main_background.jpg");
 		backGroundImage= ii.getImage();
 		player = new Player(this, 100);
+		shots = new ArrayList<Shot>();
 		addKeyListener(new KL ());
 		setFocusable(true);
 	}
@@ -33,6 +37,9 @@ public class GamePanel extends JPanel{
 		g.drawImage(backGroundImage, 0,0,getWidth(),getHeight(), null);
 		
 		player.drawPlayer(g);
+		for(Shot s : shots){
+			s.drawShot(g);
+		}
 	
 		 
 	}

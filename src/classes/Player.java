@@ -8,9 +8,14 @@ public class Player extends Thread {
 
 	// the game panel
 	GamePanel gp;
+	
 	// the player coordinates
 	int x;
 	int y;
+	
+	// last known coordinates, to check if moved
+	int lastX;
+	int lastY;
 	
 	boolean isFacingRight;
 	
@@ -69,6 +74,7 @@ public class Player extends Thread {
 	 * 			    To move right => add: positive value;  
 	 */
 	public void updateX(int add) {
+		lastX = x;
 		x += add;
 		if(add<0 && isFacingRight) {
 			flipPlayer(false);
@@ -83,6 +89,7 @@ public class Player extends Thread {
 	 * 			    To move down => add: positive value;  
 	 */
 	public void updateY(int add) {
+		lastY = y;
 		y += add;
 	}
 	
@@ -102,7 +109,10 @@ public class Player extends Thread {
 			// TODO Auto-generated catch block
 			 e.printStackTrace();
 		    }
-			
+		    
+		    if(!didMoved()) {
+		    	MakeShot();
+		    }
 			gp.repaint();
 		}	
 	}
@@ -127,4 +137,11 @@ public class Player extends Thread {
 		}
 	}
 	
+	private boolean didMoved() {
+		return !(lastY==y) && !(lastX == x);
+	}
+	
+	private void MakeShot() {
+		
+	}
 }
