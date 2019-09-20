@@ -76,20 +76,26 @@ public class Shot extends Thread {
 			shotLook = new ImageIcon("static/images/fists/fist-east").getImage();
 			break;
 		case NORTH_EAST:
+			shotLook = new ImageIcon("static/images/fists/fist-north-east").getImage();
 			break;
 		case NORTH:
+			shotLook = new ImageIcon("static/images/fists/fist-north").getImage();
 			break;
 		case NORTH_WEST:
+			shotLook = new ImageIcon("static/images/fists/fist-north-west").getImage();
 			break;
 		case WEST:
+			shotLook = new ImageIcon("static/images/fists/fist-west").getImage();
 			break;
 		case SOUTH_WEST:
+			shotLook = new ImageIcon("static/images/fists/fist-north-west").getImage();
 			break;
 		case SOUTH:
+			shotLook = new ImageIcon("static/images/fists/fist-south").getImage();
 			break;
 		case SOUTH_EAST:
+			shotLook = new ImageIcon("static/images/fists/fist-south-east").getImage();
 			break;
-			
 		}
 	}
 }
