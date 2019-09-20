@@ -120,7 +120,7 @@ public class GamePanel extends JPanel{
 	 * @param args execute arguments
 	 */
 	public static void main(String[] args) {
-		JFrame f=new JFrame("Chichen Invader Pre MS ver 0 2019 (c)");
+		JFrame f=new JFrame("Super Pacman Hero ver 0 2019 (c)");
 		GamePanel bp=new GamePanel();
 		f.add(bp);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
