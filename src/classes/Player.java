@@ -137,11 +137,41 @@ public class Player extends Thread {
 		}
 	}
 	
+	/**
+	 * Check weather the player moved
+	 * @return did the player moved or not, boolean
+	 */
 	private boolean didMoved() {
 		return !(lastY==y) && !(lastX == x);
 	}
 	
+	/**
+	 * make a new shot
+	 */
 	private void MakeShot() {
-		
+		gp.addShot(new Shot(gp,x,y,size/2,setHitPower(),setDirection()));
+	}
+	
+	/**
+	 * set the direction of the new shot.
+	 * at next dev stage will calculate direction by finding 
+	 * the differences between player and enemy positions.
+	 * @return Direction enum value;
+	 */
+	private Direction setDirection() {
+		if(isFacingRight) {
+			return Direction.EAST;
+		}
+		return Direction.WEST; 	
+	}
+	
+	/**
+	 * set the current new shot hit power.
+	 * at next dev stage will calculate with 
+	 * power ups.
+	 * @return double value.
+	 */
+	private double setHitPower(){
+		return power;
 	}
 }

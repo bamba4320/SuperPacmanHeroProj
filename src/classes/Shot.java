@@ -15,12 +15,22 @@ public class Shot extends Thread {
 	int deltay;
 	boolean isAlive;
 	
-	public Shot(GamePanel gamePanel,int initx, int inity, int initsize, double hit, Direction d, int size) {
+	/**
+	 * Constractor
+	 * @param gamePanel the main game panel
+	 * @param initx where to start on the x axis
+	 * @param inity where to start on the y axis
+	 * @param initsize what size will it be
+	 * @param hit hit power
+	 * @param d shot direction
+	 */
+	public Shot(GamePanel gamePanel,int initx, int inity, int initsize, double hit, Direction d) {
 		gp = gamePanel;
 		x = initx;
 		y = inity;
 		isAlive = true;
-		this.size = size;
+		size = initsize;
+		hitPower = hit;
 		setDelta(d);
 		setImage(d);
 		start();
@@ -126,10 +136,19 @@ public class Shot extends Thread {
 		}	
 	}
 	
+	/**
+	 * Physically draw the image on the screen
+	 * @param g Graphics element
+	 */
 	public void drawShot(Graphics g){
 		g.drawImage(shotLook,x,y,size,size, null);
 	}
 	
+	/**
+	 * Check if the shot need to be killed.
+	 * at next dev stage will be checked with enemies impact.
+	 * @return
+	 */
 	private boolean doKillShot() {
 		return x == 0 || x == gp.getWidth() || y == 0 || y==gp.getHeight();
 	}

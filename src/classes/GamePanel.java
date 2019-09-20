@@ -20,6 +20,9 @@ public class GamePanel extends JPanel{
 	Image backGroundImage;
 	ArrayList<Shot> shots;
 	
+	/**
+	 * Constractor
+	 */
 	public GamePanel(){
 		ImageIcon ii =new ImageIcon("static/images/backgrounds/main_background.jpg");
 		backGroundImage= ii.getImage();
@@ -29,6 +32,9 @@ public class GamePanel extends JPanel{
 		setFocusable(true);
 	}
 	
+	/**
+	 * paint all the game components
+	 */
 	public void paintComponent(Graphics g)
 	{
 		
@@ -40,6 +46,10 @@ public class GamePanel extends JPanel{
 		drawShots(g);
 	}
 	
+	/**
+	 * draw all live shots
+	 * @param g graphics element
+	 */
 	private void drawShots(Graphics g) {
 		for(Shot s : shots){
 			if(s.isAlive) {
@@ -51,32 +61,47 @@ public class GamePanel extends JPanel{
 			
 		}
 	}
-		
-		 class KL extends KeyAdapter
-	     {
-			public void keyPressed(KeyEvent e)
+	
+	/**
+	 * fire a new shot
+	 * @param s Shot object
+	 */
+	public void addShot(Shot s) {
+		this.shots.add(s);
+	}
+	
+	/**
+	 * new private key event listener
+	 * @author dodog
+	 *
+	 */
+	
+	class KL extends KeyAdapter{
+		public void keyPressed(KeyEvent e)
 			{
 			
 				int code=e.getKeyCode();
 				if(code==KeyEvent.VK_RIGHT) {
 					player.updateX(10);
 				}
+				
 				if(code==KeyEvent.VK_LEFT) {
 					player.updateX(-10);
 				}
+				
 				if(code==KeyEvent.VK_UP) {
 					player.updateY(-10);
 				}
+				
 				if(code==KeyEvent.VK_DOWN) {
 					player.updateY(10);
 				}
-				
 			}
-			
 		}
 	
-
-	
+	/**
+	 * hide the cursor while inside game panel
+	 */
 	public void  hideMouseCursor(){
 		 //Transparent 16 x 16 pixel cursor image.
 		BufferedImage cursorimg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
@@ -90,6 +115,10 @@ public class GamePanel extends JPanel{
 	}
 	
 
+	/**
+	 * main program function. program starts here.
+	 * @param args execute arguments
+	 */
 	public static void main(String[] args) {
 		JFrame f=new JFrame("Chichen Invader Pre MS ver 0 2019 (c)");
 		GamePanel bp=new GamePanel();
