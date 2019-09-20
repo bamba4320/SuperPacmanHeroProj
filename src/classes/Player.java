@@ -154,6 +154,10 @@ public class Player extends Thread {
 		new RecoilMeter(this);
 	}
 	
+	/**
+	 * used by recoil meter threads, this will keep the shots being fired with delay
+	 * @param val
+	 */
 	public void setRecoil(boolean val) {
 		recoilTime = val;
 	}
