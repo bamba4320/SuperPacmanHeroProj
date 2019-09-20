@@ -86,28 +86,28 @@ public class Shot extends Thread {
 	private void setImage(Direction d) {
 		switch(d) {
 		case EAST:
-			shotLook = new ImageIcon("static/images/fists/fist-east").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-east.png").getImage();
 			break;
 		case NORTH_EAST:
-			shotLook = new ImageIcon("static/images/fists/fist-north-east").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-north-east.png").getImage();
 			break;
 		case NORTH:
-			shotLook = new ImageIcon("static/images/fists/fist-north").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-north.png").getImage();
 			break;
 		case NORTH_WEST:
-			shotLook = new ImageIcon("static/images/fists/fist-north-west").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-north-west.png").getImage();
 			break;
 		case WEST:
-			shotLook = new ImageIcon("static/images/fists/fist-west").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-west.png").getImage();
 			break;
 		case SOUTH_WEST:
-			shotLook = new ImageIcon("static/images/fists/fist-north-west").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-north-west.png").getImage();
 			break;
 		case SOUTH:
-			shotLook = new ImageIcon("static/images/fists/fist-south").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-south.png").getImage();
 			break;
 		case SOUTH_EAST:
-			shotLook = new ImageIcon("static/images/fists/fist-south-east").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-south-east.png").getImage();
 			break;
 		}
 	}
@@ -131,6 +131,9 @@ public class Shot extends Thread {
 		   		isAlive = false;
 		   		break;
 		   	}
+		   	else {
+		   		moveShot();
+		   	}
 			
 			gp.repaint();
 		}	
@@ -151,5 +154,10 @@ public class Shot extends Thread {
 	 */
 	private boolean doKillShot() {
 		return x == 0 || x == gp.getWidth() || y == 0 || y==gp.getHeight();
+	}
+	
+	private void moveShot() {
+		x+=deltax;
+		y+=deltay;
 	}
 }
