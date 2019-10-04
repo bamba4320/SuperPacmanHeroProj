@@ -1,27 +1,27 @@
 package classes;
 
-import java.awt.*;
 
-enum Obstacles{
-	FREE_SPACE,
-	BRICK_WALL,
-}
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Block  {
 	
-	Obstacles[] Field;
+	GamePanel gp;
 	Image blockLook; 
 	int x;
 	int y;
+	int size;
 	
-	/*
-	 * ליצור פעולה שתבצע 4 פעמים את הפעולות הבאות:
-	 * 1. הגרלת מיקום רנדומלי (x,y) בין  0-9
-	 * 2. הגרלת מספר בין 1-8
-	 * 3. לפי המספר הזה, לבדוק שניתן לייצר את הצורה הנבחרת
-	 * 		גם מבחינת מקום פיזי, וגם מבחינת רווחים מקירות אחרים
-	 * 4. במידה שכן, להכניס אותה למטריצה.
-	 * 5. במידה ולא, להגריל פעם נוספת מיקום וצורה.
-	 */
+	public Block(GamePanel gamepanel, int x, int y, int size) {
+		gp = gamepanel;
+		blockLook = new ImageIcon("static/images/walls/gray-brick-wall.jpg").getImage();
+		this.x = x;
+		this.y = y;
+		this.size = size;
+	}
 	
+	public void drawBlock(Graphics g) {
+		g.drawImage(blockLook, x, y, size, size, null);
+	}
 }

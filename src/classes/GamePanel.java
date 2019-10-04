@@ -19,6 +19,8 @@ public class GamePanel extends JPanel{
 	Player player;
 	Image backGroundImage;
 	ArrayList<Shot> shots;
+	ArrayList<Block> blocks;
+	BlocksManagment BM;
 	boolean isMoved;
 	int movementDetectorsCounter;
 	
@@ -30,6 +32,8 @@ public class GamePanel extends JPanel{
 		backGroundImage= ii.getImage();
 		player = new Player(this, 100);
 		shots = new ArrayList<Shot>();
+		blocks = new ArrayList<Block>();
+		BM = new BlocksManagment(this);
 		isMoved = false;
 		movementDetectorsCounter = 0;
 		addKeyListener(new KL ());
@@ -46,7 +50,7 @@ public class GamePanel extends JPanel{
 		super.paintComponent(g);
 		
 		g.drawImage(backGroundImage, 0,0,getWidth(),getHeight(), null);
-		
+		drawBlocks(g);
 		player.drawPlayer(g);
 		drawShots(g);
 	}
@@ -76,6 +80,7 @@ public class GamePanel extends JPanel{
 		}
 	}
 	
+	
 	/**
 	 * fire a new shot
 	 * @param s Shot object
@@ -83,6 +88,23 @@ public class GamePanel extends JPanel{
 	public void addShot(Shot s) {
 		this.shots.add(s);
 	}
+	
+	
+	/**
+	 * add new block to field.
+	 * @param b Block object.
+	 */
+	public void addBlock(Block b) {
+		this.blocks.add(b);
+	}
+	
+	public void drawBlocks(Graphics g) {
+		for(Block b : blocks) {
+			b.drawBlock(g);
+		}
+	}
+	
+	
 	
 	/**
 	 * new private key event listener
