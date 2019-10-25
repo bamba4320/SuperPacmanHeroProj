@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class Player extends Thread {
+public class Player extends Thread implements GamePiece {
 
 	// the game panel
 	GamePanel gp;
@@ -150,7 +150,7 @@ public class Player extends Thread {
 	 * make a new shot and set recoil
 	 */
 	private void makeShot() {
-		gp.addShot(new Shot(gp,x,y,size/2,setHitPower(),setDirection()));
+		gp.addShot(new Shot(gp, x + size/4, y + size / 4, size/2, setHitPower(), setDirection()));
 		new RecoilMeter(this);
 	}
 	
@@ -183,5 +183,21 @@ public class Player extends Thread {
 	 */
 	private double setHitPower(){
 		return power;
+	}
+	
+	public boolean checkBlockEncounter() {
+		boolean hitDetected = false;
+		for(Block b : gp.blocks) {
+			// if the shot has hit a wall, stop testing and end loop
+			if(hitDetected) {
+				break;
+			}
+			
+			/*
+			 * check 4 points of the shot and check if 
+			 */
+			hitDetected = CollusionHandler.DidCollusion(this, b);
+		}
+		return hitDetected;
 	}
 }

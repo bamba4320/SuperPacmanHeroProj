@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
-public class Shot extends Thread { 
+public class Shot extends Thread implements GamePiece { 
 	GamePanel gp;
 	Image shotLook;
 	int x;
@@ -14,6 +14,7 @@ public class Shot extends Thread {
 	int deltax;
 	int deltay;
 	boolean isAlive;
+	Direction movmentDirection;
 	
 	/**
 	 * Constractor
@@ -31,8 +32,9 @@ public class Shot extends Thread {
 		isAlive = true;
 		size = initsize;
 		hitPower = hit;
-		setDelta(d);
-		setImage(d);
+		movmentDirection = d;
+		setDelta();
+		setImage();
 		start();
 	}
 	
@@ -40,8 +42,8 @@ public class Shot extends Thread {
 	 * Set the shot steps for each axis
 	 * @param d: the Direction of the shot
 	 */
-	private void setDelta(Direction d) {
-		switch(d) {
+	private void setDelta() {
+		switch(movmentDirection) {
 		case EAST:
 			deltay=0;
 			deltax=20;
@@ -74,6 +76,10 @@ public class Shot extends Thread {
 			deltay=-20;
 			deltax=20;
 			break;
+		default:
+			deltay=0;
+			deltax=0;
+			break;
 			
 		}
 		
@@ -83,8 +89,8 @@ public class Shot extends Thread {
 	 * Set the shot image base on direction
 	 * @param d: the Direction of the shot
 	 */
-	private void setImage(Direction d) {
-		switch(d) {
+	private void setImage() {
+		switch(movmentDirection) {
 		case EAST:
 			shotLook = new ImageIcon("static/images/fists/fist-east.png").getImage();
 			break;
@@ -109,6 +115,8 @@ public class Shot extends Thread {
 		case SOUTH_EAST:
 			shotLook = new ImageIcon("static/images/fists/fist-south-east.png").getImage();
 			break;
+		default:
+			break;
 		}
 	}
 	/**
@@ -130,8 +138,7 @@ public class Shot extends Thread {
 		   	if(doKillShot()) {
 		   		isAlive = false;
 		   		break;
-		   	}
-		   	else {
+		   	} else {
 		   		moveShot();
 		   	}
 			
@@ -149,15 +156,52 @@ public class Shot extends Thread {
 	
 	/**
 	 * Check if the shot need to be killed.
-	 * at next dev stage will be checked with enemies impact.
-	 * @return
+	 * @return boolean value
 	 */
 	private boolean doKillShot() {
-		return x == 0 || x == gp.getWidth() || y == 0 || y==gp.getHeight();
+		return (x == 0 || x == gp.getWidth() || y == 0 || y==gp.getHeight()) || (didHit());
 	}
 	
 	private void moveShot() {
 		x+=deltax;
 		y+=deltay;
+	}
+	
+	/**
+	 * check if shot has hit anything
+	 * @return true or false
+	 */
+	private boolean didHit() {
+	
+		return checkHitBlock() || checkHitEnemy();
+	}
+
+	/**
+	 * check if shot has hit an enemy
+	 * @return true or false
+	 */
+	private boolean checkHitEnemy() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * check if shot has hit a wall
+	 * @return true or false
+	 */
+	private boolean checkHitBlock() {
+		boolean hitDetected = false;
+		for(Block b : gp.blocks) {
+			// if the shot has hit a wall, stop testing and end loop
+			if(hitDetected) {
+				break;
+			}
+			
+			/*
+			 * check 4 points of the shot and check if 
+			 */
+			hitDetected = CollusionHandler.DidCollusion(this, b, movmentDirection);
+		}
+		return hitDetected;
 	}
 }

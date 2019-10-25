@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 enum Direction{
-	EAST,NORTH_EAST,NORTH,NORTH_WEST,WEST,SOUTH_WEST,SOUTH,SOUTH_EAST
+	EAST,NORTH_EAST,NORTH,NORTH_WEST,WEST,SOUTH_WEST,SOUTH,SOUTH_EAST,ALL
 }
 
 public class GamePanel extends JPanel{
@@ -118,23 +118,31 @@ public class GamePanel extends JPanel{
 			
 				int code=e.getKeyCode();
 				if(code==KeyEvent.VK_RIGHT) {
-					player.updateX(10);
-					startMovementDetector();
+					if(!player.checkBlockEncounter()) {
+						player.updateX(10);
+						startMovementDetector();
+					}
 				}
 				
 				if(code==KeyEvent.VK_LEFT) {
-					player.updateX(-10);
-					startMovementDetector();
+					if(!player.checkBlockEncounter()) {
+						player.updateX(-10);
+						startMovementDetector();
+					}
 				}
 				
 				if(code==KeyEvent.VK_UP) {
-					player.updateY(-10);
-					startMovementDetector();
+					if(!player.checkBlockEncounter()) {
+						player.updateY(-10);
+						startMovementDetector();
+					}
 				}
 				
 				if(code==KeyEvent.VK_DOWN) {
-					player.updateY(10);
-					startMovementDetector();
+					if(!player.checkBlockEncounter()) {
+						player.updateY(10);
+						startMovementDetector();
+					}
 				}
 				
 			}
@@ -179,7 +187,7 @@ public class GamePanel extends JPanel{
 		GamePanel bp=new GamePanel();
 		f.add(bp);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1650,1000);
+		f.setSize(1000,1000);
 		f.setResizable(false);
 		f.setVisible(true);	
 		f.setFocusable(false);

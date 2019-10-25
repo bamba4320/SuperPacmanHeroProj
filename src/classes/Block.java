@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Block  {
+public class Block implements GamePiece {
 	
 	GamePanel gp;
 	Image blockLook; 
