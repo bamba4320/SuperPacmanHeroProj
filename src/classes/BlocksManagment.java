@@ -37,10 +37,10 @@ public class BlocksManagment {
 		gp.blocks.clear();
 		Random rand = new Random();
 		int counter = 0;
-		while(counter < 2) {
+		while(counter < 3) {
 			int xCord = rand.nextInt(field.length / 2);
-			int yCord = rand.nextInt(field.length / 2);
-			int blockForm = rand.nextInt(field.length);
+			int yCord = rand.nextInt(field.length);
+			int blockForm = rand.nextInt(10);
 			switch(blockForm) {
 			
 			// for each case, check if the form can be placed there. 
@@ -231,7 +231,7 @@ public class BlocksManagment {
 					// create left side
 					createForm(FORMS.SLASH_FORM, xCord, yCord);
 					// mirror to right side
-					createForm(FORMS.SLASH_FORM, 
+					createForm(FORMS.BACK_SLASH_FORM, 
 							(field.length - 1) - xCord, yCord);
 					counter++;
 				}
@@ -254,8 +254,9 @@ public class BlocksManagment {
 					// create left side
 					createForm(FORMS.BACK_SLASH_FORM, xCord, yCord);
 					// mirror to right side
-					createForm(FORMS.BACK_SLASH_FORM, 
+					createForm(FORMS.SLASH_FORM, 
 							(field.length - 1) - xCord, yCord);
+					
 					
 					
 					counter++;
