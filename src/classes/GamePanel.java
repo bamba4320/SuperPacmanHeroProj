@@ -15,7 +15,7 @@ public class GamePanel extends JPanel{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5L;
 	Player player;
 	Image backGroundImage;
 	ArrayList<Shot> shots;
@@ -46,13 +46,21 @@ public class GamePanel extends JPanel{
 	 */
 	public void paintComponent(Graphics g)
 	{
+		try {
+			super.paintComponent(g);
+			
+			g.drawImage(backGroundImage, 0,0,getWidth(),getHeight(), null);
+//			System.out.print("background drawed, ");
+			drawBlocks(g);
+//			System.out.print("blocks drawed, ");
+			player.drawPlayer(g);
+//			System.out.print("player drawed, ");
+			drawShots(g);
+//			System.out.println("shots drawed");
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
-		super.paintComponent(g);
-		
-		g.drawImage(backGroundImage, 0,0,getWidth(),getHeight(), null);
-		drawBlocks(g);
-		player.drawPlayer(g);
-		drawShots(g);
 	}
 	
 	/**
@@ -60,24 +68,29 @@ public class GamePanel extends JPanel{
 	 * @param g graphics element
 	 */
 	private void drawShots(Graphics g) {
-		for(Shot s : shots){
-			try {
-				if(s.isAlive && s != null) {
-					s.drawShot(g);	
+		if(!shots.isEmpty()) {
+			for(Shot s : shots){
+				try {
+					if(s != null && !s.isAlive)
+						shots.remove(s);
+				}catch(Exception e) {	
+					System.out.println(e.getMessage());
 				}
-			}catch(Exception e) {
+			}
 				
+			for(Shot s : shots){
+				try {
+					if(s != null && s.isAlive) {
+						s.drawShot(g);	
+					}
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+					
+				}
 			}
 		}
 		
-		for(Shot s : shots){
-			try {
-				if(!s.isAlive && s != null) {
-					shots.remove(s);	
-				}
-			}catch(Exception e) {		
-			}
-		}
+		
 	}
 	
 	
@@ -183,7 +196,7 @@ public class GamePanel extends JPanel{
 	 * @param args execute arguments
 	 */
 	public static void main(String[] args) {
-		JFrame f=new JFrame("Super Pacman Hero ver 0 2019 (c)");
+		JFrame f=new JFrame("Super Pacman Hero ver 0.5 2019 (c)");
 		GamePanel bp=new GamePanel();
 		f.add(bp);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

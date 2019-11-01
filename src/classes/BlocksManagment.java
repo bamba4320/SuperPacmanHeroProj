@@ -26,19 +26,19 @@ public class BlocksManagment {
 		
 	}
 	
-	public Block[][] getField(){
-		return field;
-	}
-	
 	/**
 	 * initialize blocks configuration.
 	 */
 	private void initBlocks() {
-		gp.blocks.clear();
+		for(int i = 0; i < field.length; i++ ) {
+			for(int j = 0; j < field.length; j++) {
+				field[i][j] = null;
+			}
+		}
 		Random rand = new Random();
 		int counter = 0;
 		while(counter < 3) {
-			int xCord = rand.nextInt(field.length / 2);
+			int xCord = rand.nextInt(field.length - 2 / 2);
 			int yCord = rand.nextInt(field.length);
 			int blockForm = rand.nextInt(10);
 			switch(blockForm) {
@@ -59,7 +59,9 @@ public class BlocksManagment {
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null
 					&& yCord + 1 < field.length
-					&& field[xCord][yCord + 1] == null) {
+					&& field[xCord][yCord + 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					
 					// create left side
 					createForm(FORMS.T_FORM,
@@ -84,7 +86,9 @@ public class BlocksManagment {
 					&& yCord + 1 < field.length 
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1
-					&& field[xCord][yCord - 1] == null) {
+					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					
 					// create left side
 					createForm(FORMS.LEFT_ROTATE_T_FORM,
@@ -109,7 +113,9 @@ public class BlocksManagment {
 					&& yCord + 1 < field.length  
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1 
-					&& field[xCord][yCord - 1] == null) {
+					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 
 					// create left side
 					createForm(FORMS.RIGHT_ROTATE_T_FORM, 
@@ -133,7 +139,9 @@ public class BlocksManagment {
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null
 					&& yCord - 1 > -1 
-					&& field[xCord][yCord - 1] == null) {
+					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					// create left side
 					createForm(FORMS.REVERT_T_FORM, 
 								xCord, yCord);
@@ -159,7 +167,9 @@ public class BlocksManagment {
 					&& yCord - 1 > -1  
 					&& field[xCord][yCord - 1] == null
 					&& yCord + 1 < 10 
-					&& field[xCord][yCord + 1] == null) {
+					&& field[xCord][yCord + 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 
 					// create left side
 					createForm(FORMS.PLUS_FORM, 
@@ -180,7 +190,9 @@ public class BlocksManagment {
 					&& xCord - 1 > -1 
 					&& field[xCord - 1][yCord] == null
 					&& xCord + 1 < field.length / 2
-					&& field[xCord + 1][yCord] == null) {
+					&& field[xCord + 1][yCord] == null 
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					
 					// create left side
 					createForm(FORMS.HORIZONTAL_LINE_FORM,
@@ -202,7 +214,9 @@ public class BlocksManagment {
 					&& yCord + 1 < field.length
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1 
-					&& field[xCord][yCord - 1] == null) {
+					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					
 					// create left side
 					createForm(FORMS.VERTICAL_LINE_FORM,
@@ -227,7 +241,9 @@ public class BlocksManagment {
 					&& field[xCord + 1][yCord + 1] == null
 					&& yCord - 1 > -1 
 					&& xCord - 1 > -1
-					&& field[xCord - 1][yCord - 1] == null) {
+					&& field[xCord - 1][yCord - 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					// create left side
 					createForm(FORMS.SLASH_FORM, xCord, yCord);
 					// mirror to right side
@@ -250,7 +266,9 @@ public class BlocksManagment {
 					&& field[xCord + 1][yCord - 1] == null
 					&& yCord + 1 < field.length 
 					&& xCord - 1 > -1
-					&& field[xCord - 1][yCord + 1] == null) {
+					&& field[xCord - 1][yCord + 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					// create left side
 					createForm(FORMS.BACK_SLASH_FORM, xCord, yCord);
 					// mirror to right side
@@ -278,7 +296,9 @@ public class BlocksManagment {
 					&& xCord - 1 > -1
 					&& field[xCord - 1][yCord + 1] == null 
 					&& field[xCord + 1][yCord + 1] == null
-					&& field[xCord - 1][yCord - 1] == null) {
+					&& field[xCord - 1][yCord - 1] == null
+					&& xCord - 1 != 5 
+					&& xCord + 1 != 4) {
 					// create left side
 					createForm(FORMS.X_FORM, 
 								xCord, yCord);
@@ -294,7 +314,6 @@ public class BlocksManagment {
 				break;
 			}
 		}
-		
 	}
 	
 	/**
@@ -354,11 +373,19 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createT(int x, int y) {
-		
+//		System.out.println("create T");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]     = new Block(gp, 100 * x, 100 * y, 100 );
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x + 1][y]: %b", field[x + 1][y]));
 		field[x + 1][y] = new Block(gp, 100 * (x + 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x + 1][y]: %b, x: %d, y: %d", field[x + 1][y], field[x + 1][y].getX(), field[x + 1][y].getY()));
+//		System.out.println(String.format("object at field[x - 1][y]: %b", field[x - 1][y]));
 		field[x - 1][y] = new Block(gp, 100 * (x - 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x - 1][y]: %b, x: %d, y: %d", field[x - 1][y], field[x - 1][y].getX(), field[x - 1][y].getY()));
+//		System.out.println(String.format("object at field[x][y + 1]: %b", field[x][y + 1]));
 		field[x][y + 1] = new Block(gp, 100 * x, 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x][y + 1]: %b, x: %d, y: %d", field[x][y + 1], field[x][y + 1].getX(), field[x][y + 1].getY()));
 		
 		addBlocksToGP(field[x][y], field[x + 1][y],
 						field[x - 1][y], field[x][y + 1]);
@@ -371,10 +398,19 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createLRT(int x, int y) {
+//		System.out.println("create LRT");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]     = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x + 1][y]: %b", field[x + 1][y]));
 		field[x + 1][y] = new Block(gp, 100 * (x + 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x + 1][y]: %b, x: %d, y: %d", field[x + 1][y], field[x + 1][y].getX(), field[x + 1][y].getY()));
+//		System.out.println(String.format("object at field[x][y - 1]: %b", field[x][y - 1]));
 		field[x][y - 1] = new Block(gp, 100 * x, 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x][y - 1]: %b, x: %d, y: %d", field[x][y - 1], field[x][y - 1].getX(), field[x][y - 1].getY()));
+//		System.out.println(String.format("object at field[x][y + 1]: %b", field[x][y + 1]));
 		field[x][y + 1] = new Block(gp, 100 * x, 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x][y + 1]: %b, x: %d, y: %d", field[x][y + 1], field[x][y + 1].getX(), field[x][y + 1].getY()));
 		
 		addBlocksToGP(field[x][y], field[x + 1][y],
 						field[x][y - 1], field[x][y + 1]);
@@ -387,10 +423,19 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createRRT(int x, int y) {
+//		System.out.println("create RRT");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]     = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x - 1][y]: %b", field[x - 1][y]));
 		field[x - 1][y] = new Block(gp, 100 * (x - 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x - 1][y]: %b, x: %d, y: %d", field[x - 1][y], field[x - 1][y].getX(), field[x - 1][y].getY()));
+//		System.out.println(String.format("object at field[x][y - 1]: %b", field[x][y - 1]));
 		field[x][y - 1] = new Block(gp, 100 * x, 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x][y - 1]: %b, x: %d, y: %d", field[x][y - 1], field[x][y - 1].getX(), field[x][y - 1].getY()));
+//		System.out.println(String.format("object at field[x][y + 1]: %b", field[x][y + 1]));
 		field[x][y + 1] = new Block(gp, 100 * x, 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x][y + 1]: %b, x: %d, y: %d", field[x][y + 1], field[x][y + 1].getX(), field[x][y + 1].getY()));
 		
 		addBlocksToGP(field[x][y], field[x - 1][y], 
 						field[x][y - 1], field[x][y + 1]);
@@ -402,10 +447,19 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createRT(int x, int y) {
+//		System.out.println("create RT");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]     = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x + 1][y]: %b", field[x + 1][y]));
 		field[x + 1][y] = new Block(gp, 100 * (x + 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x + 1][y]: %b, x: %d, y: %d", field[x + 1][y], field[x + 1][y].getX(), field[x + 1][y].getY()));
+//		System.out.println(String.format("object at field[x - 1][y]: %b", field[x - 1][y]));
 		field[x - 1][y] = new Block(gp, 100 * (x - 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x - 1][y]: %b, x: %d, y: %d", field[x - 1][y], field[x - 1][y].getX(), field[x - 1][y].getY()));
+//		System.out.println(String.format("object at field[x][y - 1]: %b", field[x][y - 1]));
 		field[x][y - 1] = new Block(gp, 100 * x, 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x][y - 1]: %b, x: %d, y: %d", field[x][y - 1], field[x][y - 1].getX(), field[x][y - 1].getY()));
 		
 		addBlocksToGP(field[x][y], field[x + 1][y],
 						field[x - 1][y], field[x][y - 1]);
@@ -417,11 +471,22 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createP(int x, int y) {
+//		System.out.println("create P");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]     = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x + 1][y]: %b", field[x + 1][y]));
 		field[x + 1][y] = new Block(gp, 100 * (x + 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x + 1][y]: %b, x: %d, y: %d", field[x + 1][y], field[x + 1][y].getX(), field[x + 1][y].getY()));
+//		System.out.println(String.format("object at field[x - 1][y]: %b", field[x - 1][y]));
 		field[x - 1][y] = new Block(gp, 100 * (x - 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x - 1][y]: %b, x: %d, y: %d", field[x - 1][y], field[x - 1][y].getX(), field[x - 1][y].getY()));
+//		System.out.println(String.format("object at field[x][y - 1]: %b", field[x][y - 1]));
 		field[x][y - 1] = new Block(gp, 100 * x, 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x][y - 1]: %b, x: %d, y: %d", field[x][y - 1], field[x][y - 1].getX(), field[x][y - 1].getY()));
+//		System.out.println(String.format("object at field[x][y + 1]: %b", field[x][y + 1]));
 		field[x][y + 1] = new Block(gp, 100 * x, 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x][y + 1]: %b, x: %d, y: %d", field[x][y + 1], field[x][y + 1].getX(), field[x][y + 1].getY()));
 		
 		addBlocksToGP(field[x][y], field[x + 1][y], 
 						field[x - 1][y], field[x][y - 1],
@@ -434,9 +499,16 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createHL(int x, int y) {
+//		System.out.println("create HL");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]     = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x + 1][y]: %b", field[x + 1][y]));
 		field[x + 1][y] = new Block(gp, 100 * (x + 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x + 1][y]: %b, x: %d, y: %d", field[x + 1][y], field[x + 1][y].getX(), field[x + 1][y].getY()));
+//		System.out.println(String.format("object at field[x - 1][y]: %b", field[x - 1][y]));
 		field[x - 1][y] = new Block(gp, 100 * (x - 1), 100 * y, 100);
+//		System.out.println(String.format("object at field[x - 1][y]: %b, x: %d, y: %d", field[x - 1][y], field[x - 1][y].getX(), field[x - 1][y].getY()));
 		
 		addBlocksToGP(field[x][y],field[x + 1][y],
 						field[x - 1][y]);
@@ -449,9 +521,16 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createVL(int x, int y) {
+//		System.out.println("create VL");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]     = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x][y - 1]: %b", field[x][y - 1]));
 		field[x][y - 1] = new Block(gp, 100 * x, 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x][y - 1]: %b, x: %d, y: %d", field[x][y - 1], field[x][y - 1].getX(), field[x][y - 1].getY()));
+//		System.out.println(String.format("object at field[x][y + 1]: %b", field[x][y + 1]));
 		field[x][y + 1] = new Block(gp, 100 * x, 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x][y + 1]: %b, x: %d, y: %d", field[x][y + 1], field[x][y + 1].getX(), field[x][y + 1].getY()));
 		
 		addBlocksToGP(field[x][y],field[x][y - 1],
 						field[x][y + 1]);
@@ -463,9 +542,16 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createS(int x, int y) {
+//		System.out.println("create S");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]         = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x - 1][y - 1]: %b", field[x - 1][y - 1]));
 		field[x - 1][y - 1] = new Block(gp, 100 * (x - 1), 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x - 1][y - 1]: %b, x: %d, y: %d", field[x + 1][y - 1], field[x + 1][y - 1].getX(), field[x + 1][y - 1].getY()));
+//		System.out.println(String.format("object at field[x + 1][y + 1]: %b", field[x + 1][y + 1]));
 		field[x + 1][y + 1] = new Block(gp, 100 * (x + 1), 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x + 1][y + 1]: %b, x: %d, y: %d", field[x + 1][y + 1], field[x + 1][y + 1].getX(), field[x + 1][y + 1].getY()));
 		
 		addBlocksToGP(field[x][y],field[x - 1][y - 1],
 						field[x + 1][y + 1]);
@@ -478,10 +564,17 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createBS(int x, int y) {
+//		System.out.println("create BS");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]         = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x + 1][y - 1]: %b", field[x + 1][y - 1]));
 		field[x + 1][y - 1] = new Block(gp, 100 * (x + 1), 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x + 1][y - 1]: %b, x: %d, y: %d", field[x + 1][y - 1], field[x + 1][y - 1].getX(), field[x + 1][y - 1].getY()));
+//		System.out.println(String.format("object at field[x - 1][y + 1]: %b", field[x - 1][y + 1]));
 		field[x - 1][y + 1] = new Block(gp, 100 * (x - 1), 100 * (y + 1), 100);
-		
+//		System.out.println(String.format("object at field[x - 1][y + 1]: %b, x: %d, y: %d", field[x - 1][y + 1], field[x - 1][y + 1].getX(), field[x - 1][y + 1].getY()));
+
 		addBlocksToGP(field[x][y],field[x + 1][y - 1],
 				field[x - 1][y + 1]);
 		
@@ -493,11 +586,22 @@ public class BlocksManagment {
 	 * @param y - column number in the matrix.
 	 */
 	private void createX(int x, int y) {
+//		System.out.println("create X");
+//		System.out.println(String.format("object at field[x][y]: %b", field[x][y]));
 		field[x][y]         = new Block(gp, 100 * x, 100 * y, 100);
+//		System.out.println(String.format("object at field[x][y]: %b, x: %d, y: %d", field[x][y], field[x][y].getX(), field[x][y].getY()));
+//		System.out.println(String.format("object at field[x + 1][y - 1]: %b", field[x + 1][y - 1]));
 		field[x + 1][y - 1] = new Block(gp, 100 * (x + 1), 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x + 1][y - 1]: %b, x: %d, y: %d", field[x + 1][y - 1], field[x + 1][y - 1].getX(), field[x + 1][y - 1].getY()));
+//		System.out.println(String.format("object at field[x - 1][y + 1]: %b", field[x - 1][y + 1]));
 		field[x - 1][y + 1] = new Block(gp, 100 * (x - 1), 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x - 1][y + 1]: %b, x: %d, y: %d", field[x - 1][y + 1], field[x - 1][y + 1].getX(), field[x - 1][y + 1].getY()));
+//		System.out.println(String.format("object at field[x + 1][y + 1]: %b", field[x + 1][y + 1]));
 		field[x + 1][y + 1] = new Block(gp, 100 * (x + 1), 100 * (y + 1), 100);
+//		System.out.println(String.format("object at field[x + 1][y + 1]: %b, x: %d, y: %d", field[x + 1][y + 1], field[x + 1][y + 1].getX(), field[x + 1][y + 1].getY()));
+//		System.out.println(String.format("object at field[x - 1][y - 1]: %b", field[x - 1][y - 1]));
 		field[x - 1][y - 1] = new Block(gp, 100 * (x - 1), 100 * (y - 1), 100);
+//		System.out.println(String.format("object at field[x - 1][y - 1]: %b, x: %d, y: %d", field[x + 1][y - 1], field[x + 1][y - 1].getX(), field[x + 1][y - 1].getY()));
 		
 		addBlocksToGP(field[x][y], field[x + 1][y + 1], 
 				field[x - 1][y - 1], field[x + 1][y - 1],
@@ -507,6 +611,7 @@ public class BlocksManagment {
 	
 	private void addBlocksToGP(Block... blocks) {
 		for(Block b : blocks) {
+//			System.out.print(String.format("adding block to arraylist, x: %d, y: %d",b.getX(), b.getY()));
 			gp.addBlock(b);
 		}
 	}

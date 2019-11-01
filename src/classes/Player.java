@@ -41,8 +41,8 @@ public class Player extends Thread implements GamePiece {
 	 */
 	public Player(GamePanel gamePanel, int playerSize) {
 		gp = gamePanel;
-		x = 500;
-		y = 500;
+		x = 450;
+		y = 850;
 		size = playerSize;
 		power = 1;
 		lives = 3;
@@ -200,4 +200,6 @@ public class Player extends Thread implements GamePiece {
 		}
 		return hitDetected;
 	}
+	
+	public int getSize() {return size;}
 }

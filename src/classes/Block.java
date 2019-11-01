@@ -19,9 +19,16 @@ public class Block implements GamePiece {
 		this.x = x;
 		this.y = y;
 		this.size = size;
+		//System.out.println(String.format("x: %d, y: %d", this.x, this.y));
+	
 	}
 	
 	public void drawBlock(Graphics g) {
 		g.drawImage(blockLook, x, y, size, size, null);
 	}
+	
+	public int getX() {return x;}
+	public int getY() {return y;}
+	public int getSize() {return size;}
+	
 }

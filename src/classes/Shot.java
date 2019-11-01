@@ -36,6 +36,7 @@ public class Shot extends Thread implements GamePiece {
 		setDelta();
 		setImage();
 		start();
+//		System.out.println(String.format("x: %d, y:%d",x,y));
 	}
 	
 	/**
@@ -133,7 +134,7 @@ public class Shot extends Thread implements GamePiece {
 			Thread.sleep(30);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			 e.printStackTrace();
+		    	  e.printStackTrace();
 		    }
 		   	if(doKillShot()) {
 		   		isAlive = false;
@@ -192,6 +193,7 @@ public class Shot extends Thread implements GamePiece {
 	private boolean checkHitBlock() {
 		boolean hitDetected = false;
 		for(Block b : gp.blocks) {
+			//System.out.println(String.format("block x: %d , block y: %d", b.getX(), b.getY()));
 			// if the shot has hit a wall, stop testing and end loop
 			if(hitDetected) {
 				break;
@@ -200,8 +202,12 @@ public class Shot extends Thread implements GamePiece {
 			/*
 			 * check 4 points of the shot and check if 
 			 */
-			hitDetected = CollusionHandler.DidCollusion(this, b, movmentDirection);
+				hitDetected = CollusionHandler.DidCollusion(this, b, movmentDirection);
 		}
 		return hitDetected;
 	}
+	
+	public int getX() {return x;}
+	public int getY() {return y;}
+	public int getSize() {return size;}
 }
