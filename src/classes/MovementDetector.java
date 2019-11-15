@@ -13,8 +13,8 @@ public class MovementDetector extends Thread {
 		try {
 				gp.movementDetectCounterUpdate(true);
 				gp.setIsMoved(true);
-				Thread.sleep(300);
-				if(gp.movementDetectorsCounter == 1) {
+				Thread.sleep(500);
+				if(gp.movementDetectorsCounter <= 1) {
 					gp.setIsMoved(false);
 				}
 				gp.movementDetectCounterUpdate(false);

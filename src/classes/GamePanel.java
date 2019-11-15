@@ -126,38 +126,73 @@ public class GamePanel extends JPanel{
 	 */
 	
 	class KL extends KeyAdapter{
+		
+		
+		// key pressed add key code to list if not exist
+		// call to check movement at the end
+		// key released remove key code from list
+		// player.direction = false
+		
+		// check movement - set player.diration = true
+		
+		// in player thread call calc movement + short sleep
+		
+		// calc movement - check each direction if true, move
+		
+	
+		ArrayList<Integer> movementKeyPressed = new ArrayList<Integer>(); 
+		
 		public void keyPressed(KeyEvent e)
 			{
+				
 			
 				int code=e.getKeyCode();
-				if(code==KeyEvent.VK_RIGHT) {
-					if(!player.checkBlockEncounter()) {
-						player.updateX(10);
-						startMovementDetector();
-					}
+				if(!movementKeyPressed.contains(code)) {
+					movementKeyPressed.add(code);
 				}
 				
-				if(code==KeyEvent.VK_LEFT) {
-					if(!player.checkBlockEncounter()) {
-						player.updateX(-10);
+				checkMovement();
+				
+			}
+
+			private void checkMovement() {
+				if(movementKeyPressed.contains(KeyEvent.VK_LEFT)) {
+						player.moveLeft = true;
 						startMovementDetector();
 					}
-				}
-				
-				if(code==KeyEvent.VK_UP) {
-					if(!player.checkBlockEncounter()) {
-						player.updateY(-10);
+				if(movementKeyPressed.contains(KeyEvent.VK_RIGHT)) {
+						player.moveRight = true;
 						startMovementDetector();
 					}
-				}
-				
-				if(code==KeyEvent.VK_DOWN) {
-					if(!player.checkBlockEncounter()) {
-						player.updateY(10);
+				if(movementKeyPressed.contains(KeyEvent.VK_DOWN)) {
+						player.moveDown = true;
 						startMovementDetector();
 					}
-				}
-				
+				if(movementKeyPressed.contains(KeyEvent.VK_UP)) {
+						player.moveUp = true;
+						startMovementDetector();
+					}
+			}
+			
+			public void keyReleased(KeyEvent e) {
+				int code=e.getKeyCode();
+				movementKeyPressed.remove((Object)code);
+				if(code == KeyEvent.VK_LEFT) {
+						player.moveLeft = false;
+						movementDetectCounterUpdate(false);
+					}
+				if(code == KeyEvent.VK_RIGHT) {
+						player.moveRight = false;
+						movementDetectCounterUpdate(false);
+					}
+				if(code == KeyEvent.VK_DOWN) {
+						player.moveDown = false;
+						movementDetectCounterUpdate(false);
+						}
+				if(code == KeyEvent.VK_UP) {
+						player.moveUp = false;
+						movementDetectCounterUpdate(false);
+					}
 			}
 		}
 	
@@ -179,7 +214,7 @@ public class GamePanel extends JPanel{
 	/**
 	 * work with the movement detector
 	 */
-	private void startMovementDetector() {
+	public void startMovementDetector() {
 		new MovementDetector(this);
 	}
 	
@@ -189,6 +224,7 @@ public class GamePanel extends JPanel{
 	
 	public void setIsMoved(boolean val) {
 		isMoved = val;
+		movementDetectorsCounter = isMoved? movementDetectorsCounter : 0;
 	}
 
 	/**

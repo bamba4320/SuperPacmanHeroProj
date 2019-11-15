@@ -39,7 +39,7 @@ public class BlocksManagment {
 		int counter = 0;
 		while(counter < 3) {
 			int xCord = rand.nextInt(field.length - 2 / 2);
-			int yCord = rand.nextInt(field.length);
+			int yCord = rand.nextInt(field.length - 2);
 			int blockForm = rand.nextInt(10);
 			switch(blockForm) {
 			
@@ -60,6 +60,8 @@ public class BlocksManagment {
 					&& field[xCord + 1][yCord] == null
 					&& yCord + 1 < field.length
 					&& field[xCord][yCord + 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					
@@ -87,6 +89,8 @@ public class BlocksManagment {
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1
 					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					
@@ -114,6 +118,8 @@ public class BlocksManagment {
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1 
 					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 
@@ -140,6 +146,8 @@ public class BlocksManagment {
 					&& field[xCord + 1][yCord] == null
 					&& yCord - 1 > -1 
 					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					// create left side
@@ -168,6 +176,8 @@ public class BlocksManagment {
 					&& field[xCord][yCord - 1] == null
 					&& yCord + 1 < 10 
 					&& field[xCord][yCord + 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 
@@ -191,6 +201,8 @@ public class BlocksManagment {
 					&& field[xCord - 1][yCord] == null
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null 
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					
@@ -215,6 +227,8 @@ public class BlocksManagment {
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1 
 					&& field[xCord][yCord - 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					
@@ -242,6 +256,8 @@ public class BlocksManagment {
 					&& yCord - 1 > -1 
 					&& xCord - 1 > -1
 					&& field[xCord - 1][yCord - 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					// create left side
@@ -267,6 +283,8 @@ public class BlocksManagment {
 					&& yCord + 1 < field.length 
 					&& xCord - 1 > -1
 					&& field[xCord - 1][yCord + 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					// create left side
@@ -297,6 +315,8 @@ public class BlocksManagment {
 					&& field[xCord - 1][yCord + 1] == null 
 					&& field[xCord + 1][yCord + 1] == null
 					&& field[xCord - 1][yCord - 1] == null
+					&& xCord - 1 != 4 
+					&& xCord + 1 != 5
 					&& xCord - 1 != 5 
 					&& xCord + 1 != 4) {
 					// create left side

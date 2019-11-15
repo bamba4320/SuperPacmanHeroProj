@@ -36,6 +36,9 @@ public class Player extends Thread implements GamePiece {
 	// does the player able to shoot
 	boolean recoilTime;
 	
+	// movement direction
+	boolean moveUp, moveDown, moveRight, moveLeft;
+	
 	/**
 	 * Player class constructor
 	 */
@@ -49,6 +52,10 @@ public class Player extends Thread implements GamePiece {
 		hp = 200;
 		isFacingRight = true;
 		recoilTime = false;
+		moveUp = false;
+		moveDown = false;
+		moveRight = false;
+		moveLeft = false;
 		playerLook = new ImageIcon("static/images/characters/iron-fist-right.png").getImage();
 		start();
 	}
@@ -75,7 +82,19 @@ public class Player extends Thread implements GamePiece {
 	 * 			    To move right => add: positive value;  
 	 */
 	public void updateX(int add) {
-		x += add;
+		if(add<0) {
+			if(   !checkBlockEncounter(Direction.WEST)  
+				&& !checkFieldBorderEncounter(Direction.WEST)) {
+				x += add;
+			}
+		}
+		if(add>0) {
+			if(   !checkBlockEncounter(Direction.EAST)  
+					&& !checkFieldBorderEncounter(Direction.EAST)) {
+					x += add;
+				}
+		}
+		gp.startMovementDetector();
 		if(add<0 && isFacingRight) {
 			flipPlayer(false);
 		}
@@ -89,7 +108,19 @@ public class Player extends Thread implements GamePiece {
 	 * 			    To move down => add: positive value;  
 	 */
 	public void updateY(int add) {
-		y += add;
+		if(add<0) {
+			if(   !checkBlockEncounter(Direction.SOUTH)  
+				&& !checkFieldBorderEncounter(Direction.SOUTH)) {
+				y += add;
+			}
+		}
+		if(add>0) {
+			if(   !checkBlockEncounter(Direction.NORTH)  
+					&& !checkFieldBorderEncounter(Direction.NORTH)) {
+					y += add;
+				}
+		}
+		gp.startMovementDetector();
 	}
 	
 	/**
@@ -101,9 +132,9 @@ public class Player extends Thread implements GamePiece {
 		
 		while(true)
 		{
-		
 		   try {
-			Thread.sleep(50);
+			   calcMovement();
+			   Thread.sleep(20);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			 e.printStackTrace();
@@ -185,7 +216,7 @@ public class Player extends Thread implements GamePiece {
 		return power;
 	}
 	
-	public boolean checkBlockEncounter() {
+	public boolean checkBlockEncounter(Direction d) {
 		boolean hitDetected = false;
 		for(Block b : gp.blocks) {
 			// if the shot has hit a wall, stop testing and end loop
@@ -196,10 +227,38 @@ public class Player extends Thread implements GamePiece {
 			/*
 			 * check 4 points of the shot and check if 
 			 */
-			hitDetected = CollusionHandler.DidCollusion(this, b);
+			hitDetected = CollusionHandler.DidCollusion(this, b,d);
 		}
 		return hitDetected;
 	}
 	
+	public boolean checkFieldBorderEncounter(Direction d) {
+		switch(d) {
+		case EAST:
+			return x + size >= 1000;
+		
+		case WEST:
+			return x <= 0;
+			
+		case NORTH:
+			return y <= 0;
+			
+		case SOUTH: 
+			return y + size >= 1050;
+			
+		default:
+			return false;
+		
+		}
+	}
+	
 	public int getSize() {return size;}
+
+	private void calcMovement() {
+		if(moveUp)    updateY(-3);
+		if(moveDown)  updateY( 3);
+		if(moveLeft)  updateX(-3);
+		if(moveRight) updateX( 3); 
+	}
+
 }
