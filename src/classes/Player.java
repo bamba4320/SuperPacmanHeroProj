@@ -109,14 +109,14 @@ public class Player extends Thread implements GamePiece {
 	 */
 	public void updateY(int add) {
 		if(add<0) {
-			if(   !checkBlockEncounter(Direction.SOUTH)  
-				&& !checkFieldBorderEncounter(Direction.SOUTH)) {
+			if(   !checkBlockEncounter(Direction.NORTH)  
+				&& !checkFieldBorderEncounter(Direction.NORTH)) {
 				y += add;
 			}
 		}
 		if(add>0) {
-			if(   !checkBlockEncounter(Direction.NORTH)  
-					&& !checkFieldBorderEncounter(Direction.NORTH)) {
+			if(   !checkBlockEncounter(Direction.SOUTH)  
+					&& !checkFieldBorderEncounter(Direction.SOUTH)) {
 					y += add;
 				}
 		}
