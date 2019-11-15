@@ -108,7 +108,7 @@ public class Shot extends Thread implements GamePiece {
 			shotLook = new ImageIcon("static/images/fists/fist-west.png").getImage();
 			break;
 		case SOUTH_WEST:
-			shotLook = new ImageIcon("static/images/fists/fist-north-west.png").getImage();
+			shotLook = new ImageIcon("static/images/fists/fist-south-west.png").getImage();
 			break;
 		case SOUTH:
 			shotLook = new ImageIcon("static/images/fists/fist-south.png").getImage();
