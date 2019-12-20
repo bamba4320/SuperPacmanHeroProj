@@ -47,35 +47,35 @@ public class Shot extends Thread implements GamePiece {
 		switch(movmentDirection) {
 		case EAST:
 			deltay=0;
-			deltax=20;
+			deltax=15;
 			break;
 		case NORTH_EAST:
-			deltay=20;
-			deltax=20;
+			deltay= -15;
+			deltax=15;
 			break;
 		case NORTH:
-			deltay=20;
+			deltay=15;
 			deltax=0;
 			break;
 		case NORTH_WEST:
-			deltay=20;
-			deltax=-20;
+			deltay=-15;
+			deltax=-15;
 			break;
 		case WEST:
 			deltay=0;
-			deltax=-20;
+			deltax=-15;
 			break;
 		case SOUTH_WEST:
-			deltay=-20;
-			deltax=-20;
+			deltay=15;
+			deltax=-15;
 			break;
 		case SOUTH:
-			deltay=-20;
+			deltay=-15;
 			deltax=0;
 			break;
 		case SOUTH_EAST:
-			deltay=-20;
-			deltax=20;
+			deltay=15;
+			deltax=15;
 			break;
 		default:
 			deltay=0;

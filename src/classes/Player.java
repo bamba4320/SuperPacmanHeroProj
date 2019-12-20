@@ -25,10 +25,11 @@ public class Player extends Thread implements GamePiece {
 	// TODO: add array of items for buffs and debuffs
 	
 	// player strength, might and will be effected during game 
-	double power;
+	double basePower;
+	double extraPower;
 	
 	// player health points
-	int hp;
+	double hp;
 	
 	// how many tries the player has until game over
 	int lives;
@@ -47,9 +48,10 @@ public class Player extends Thread implements GamePiece {
 		x = 450;
 		y = 850;
 		size = playerSize;
-		power = 1;
+		basePower = 50;
+		extraPower = 0;
 		lives = 3;
-		hp = 200;
+		hp = 500;
 		isFacingRight = true;
 		recoilTime = false;
 		moveUp = false;
@@ -122,6 +124,8 @@ public class Player extends Thread implements GamePiece {
 		}
 		gp.startMovementDetector();
 	}
+	
+	
 	
 	/**
 	 * an auto-execute function that get called from start()
@@ -213,9 +217,15 @@ public class Player extends Thread implements GamePiece {
 	 * @return double value.
 	 */
 	private double setHitPower(){
-		return power;
+		return basePower + extraPower;
 	}
 	
+	/**
+	 * check if the player hit any obstacle that block his movement
+	 * @param d movement direction
+	 * @return boolean
+	 */
+
 	public boolean checkBlockEncounter(Direction d) {
 		boolean hitDetected = false;
 		for(Block b : gp.blocks) {
@@ -232,6 +242,11 @@ public class Player extends Thread implements GamePiece {
 		return hitDetected;
 	}
 	
+	/**
+	 * check if the player has hit the boundaries of the screen
+	 * @param d walking direction
+	 * @return boolean
+	 */
 	public boolean checkFieldBorderEncounter(Direction d) {
 		switch(d) {
 		case EAST:
@@ -244,7 +259,7 @@ public class Player extends Thread implements GamePiece {
 			return y <= 0;
 			
 		case SOUTH: 
-			return y + size >= 1050;
+			return y + size >= 960;
 			
 		default:
 			return false;
@@ -252,8 +267,14 @@ public class Player extends Thread implements GamePiece {
 		}
 	}
 	
+	/**
+	 * get player size
+	 */
 	public int getSize() {return size;}
 
+	/**
+	 * calc where the player need to be moving
+	 */
 	private void calcMovement() {
 		if(moveUp)    updateY(-3);
 		if(moveDown)  updateY( 3);

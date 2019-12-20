@@ -23,6 +23,7 @@ public class GamePanel extends JPanel{
 	BlocksManagment BM;
 	boolean isMoved;
 	int movementDetectorsCounter;
+	Sidebar sidebar;
 	
 	/**
 	 * Constractor
@@ -30,14 +31,16 @@ public class GamePanel extends JPanel{
 	public GamePanel(){
 		ImageIcon ii =new ImageIcon("static/images/backgrounds/main_background.jpg");
 		backGroundImage= ii.getImage();
-		player = new Player(this, 100);
+		player = new Player(this, 85);
 		shots = new ArrayList<Shot>();
 		blocks = new ArrayList<Block>();
 		BM = new BlocksManagment(this);
 		isMoved = false;
 		movementDetectorsCounter = 0;
+		sidebar = new Sidebar(this);
 		addKeyListener(new KL ());
 		setFocusable(true);
+		setPreferredSize(new Dimension(1000,1000));
 		
 	}
 	
@@ -50,13 +53,9 @@ public class GamePanel extends JPanel{
 			super.paintComponent(g);
 			
 			g.drawImage(backGroundImage, 0,0,getWidth(),getHeight(), null);
-//			System.out.print("background drawed, ");
 			drawBlocks(g);
-//			System.out.print("blocks drawed, ");
 			player.drawPlayer(g);
-//			System.out.print("player drawed, ");
 			drawShots(g);
-//			System.out.println("shots drawed");
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -117,7 +116,9 @@ public class GamePanel extends JPanel{
 		}
 	}
 	
-	
+	public Sidebar getSidebar() {
+		return sidebar;
+	}
 	
 	/**
 	 * new private key event listener
@@ -156,19 +157,19 @@ public class GamePanel extends JPanel{
 			}
 
 			private void checkMovement() {
-				if(movementKeyPressed.contains(KeyEvent.VK_LEFT)) {
+				if(movementKeyPressed.contains(KeyEvent.VK_A)) {
 						player.moveLeft = true;
 						startMovementDetector();
 					}
-				if(movementKeyPressed.contains(KeyEvent.VK_RIGHT)) {
+				if(movementKeyPressed.contains(KeyEvent.VK_D)) {
 						player.moveRight = true;
 						startMovementDetector();
 					}
-				if(movementKeyPressed.contains(KeyEvent.VK_DOWN)) {
+				if(movementKeyPressed.contains(KeyEvent.VK_S)) {
 						player.moveDown = true;
 						startMovementDetector();
 					}
-				if(movementKeyPressed.contains(KeyEvent.VK_UP)) {
+				if(movementKeyPressed.contains(KeyEvent.VK_W)) {
 						player.moveUp = true;
 						startMovementDetector();
 					}
@@ -177,19 +178,19 @@ public class GamePanel extends JPanel{
 			public void keyReleased(KeyEvent e) {
 				int code=e.getKeyCode();
 				movementKeyPressed.remove((Object)code);
-				if(code == KeyEvent.VK_LEFT) {
+				if(code == KeyEvent.VK_A) {
 						player.moveLeft = false;
 						movementDetectCounterUpdate(false);
 					}
-				if(code == KeyEvent.VK_RIGHT) {
+				if(code == KeyEvent.VK_D) {
 						player.moveRight = false;
 						movementDetectCounterUpdate(false);
 					}
-				if(code == KeyEvent.VK_DOWN) {
+				if(code == KeyEvent.VK_S) {
 						player.moveDown = false;
 						movementDetectCounterUpdate(false);
 						}
-				if(code == KeyEvent.VK_UP) {
+				if(code == KeyEvent.VK_W) {
 						player.moveUp = false;
 						movementDetectCounterUpdate(false);
 					}
@@ -220,11 +221,18 @@ public class GamePanel extends JPanel{
 	
 	public void movementDetectCounterUpdate(boolean add) {
 		movementDetectorsCounter += add ? 1 : -1;
+		if(movementDetectorsCounter < 0) movementDetectorsCounter = 0;
 	}
 	
-	public void setIsMoved(boolean val) {
-		isMoved = val;
-		movementDetectorsCounter = isMoved? movementDetectorsCounter : 0;
+	public void setIsMoved(boolean val) throws InterruptedException {
+		movementDetectorsCounter = val? movementDetectorsCounter : 0;
+		isMoved = 
+				val 
+				|| player.moveDown 
+				|| player.moveLeft 
+				|| player.moveRight 
+				|| player.moveUp;
+		
 	}
 
 	/**
@@ -232,15 +240,31 @@ public class GamePanel extends JPanel{
 	 * @param args execute arguments
 	 */
 	public static void main(String[] args) {
-		JFrame f=new JFrame("Super Pacman Hero ver 0.5 2019 (c)");
-		GamePanel bp=new GamePanel();
-		f.add(bp);
+		JFrame f=new JFrame("Super Pacman Hero ver 0.9 2019 (c)");
+		JPanel container = new JPanel();
+		JPanel sidebarContainer = new JPanel();
+		JPanel gamePanelContainer = new JPanel();
+		GamePanel gp=new GamePanel();
+		
+		sidebarContainer.setPreferredSize(new Dimension(500,1050));
+		sidebarContainer.setBackground(Color.darkGray);
+		sidebarContainer.add(gp.getSidebar(), BorderLayout.CENTER);
+		
+		gamePanelContainer.setPreferredSize(new Dimension(1050,1050));
+		gamePanelContainer.setBackground(new Color(51,51,51));
+		gamePanelContainer.add(gp, BorderLayout.NORTH);
+		
+		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+		container.add(gamePanelContainer);
+		container.add(sidebarContainer);
+		
+		f.add(container);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1000,1000);
+		f.setSize(1550,1050);
 		f.setResizable(false);
 		f.setVisible(true);	
 		f.setFocusable(false);
-		bp.hideMouseCursor();
+		gp.hideMouseCursor();
 		
 		try {
 			Thread.sleep(1000);
