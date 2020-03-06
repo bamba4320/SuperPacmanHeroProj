@@ -71,7 +71,7 @@ public abstract class Enemy extends Thread implements GamePiece {
 		while(true)
 		{
 		   try {
-			   move();
+//			   move();
 			   Thread.sleep(20);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
