@@ -10,6 +10,10 @@ enum Direction{
 	EAST,NORTH_EAST,NORTH,NORTH_WEST,WEST,SOUTH_WEST,SOUTH,SOUTH_EAST,ALL
 }
 
+enum GamePieces{
+	PLAYER, ENEMY, BLACK_MAGE, GHOST, MASK_PEOPEL
+}
+
 public class GamePanel extends JPanel{
 
 	/**
@@ -21,20 +25,25 @@ public class GamePanel extends JPanel{
 	ArrayList<Shot> shots;
 	ArrayList<Block> blocks;
 	BlocksManagment BM;
+	ArrayList<Enemy> enemies; 
 	boolean isMoved;
 	int movementDetectorsCounter;
 	Sidebar sidebar;
+	int stage;
 	
 	/**
 	 * Constractor
 	 */
 	public GamePanel(){
+		stage = 1;
 		ImageIcon ii =new ImageIcon("static/images/backgrounds/main_background.jpg");
 		backGroundImage= ii.getImage();
 		player = new Player(this, 85);
 		shots = new ArrayList<Shot>();
 		blocks = new ArrayList<Block>();
 		BM = new BlocksManagment(this);
+		enemies = new ArrayList<Enemy>();
+		Enemy.initEnemies(this);
 		isMoved = false;
 		movementDetectorsCounter = 0;
 		sidebar = new Sidebar(this);
@@ -56,6 +65,7 @@ public class GamePanel extends JPanel{
 			drawBlocks(g);
 			player.drawPlayer(g);
 			drawShots(g);
+			drawEnemies(g);
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -233,6 +243,37 @@ public class GamePanel extends JPanel{
 				|| player.moveRight 
 				|| player.moveUp;
 		
+	}
+	
+	public void addEnemy(Enemy e) {
+		enemies.add(e);
+	}
+	
+	public void drawEnemies(Graphics g) {
+		for(Enemy e : enemies) {
+			e.drawEnemy(g);
+		}
+	}
+	
+	public int getStage() {
+		return stage;
+	}
+	
+	/**
+	 * check if a position is OK to spawn enemy
+	 * @param pos enemy initial position
+	 * @param axis 1 - x axis, 2 - y axis
+	 * @return
+	 */
+	public boolean availableSpawnPlace(int pos, int axis) {
+		
+		for(Block b : blocks) {
+			if(axis == 1 ? b.x == pos : b.y == pos) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	/**
