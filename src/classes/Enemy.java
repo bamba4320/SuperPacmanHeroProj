@@ -135,12 +135,14 @@ public abstract class Enemy extends Thread implements GamePiece {
 		int posX, posY;
 		int size = 85;
 		double hp;
+		int[] pos;
 		
-		for(int i = 0; i<1; i++) {
-//			Random rnd = new Random();
+		for(int i = 0; i<5; i++) {
+			Random rnd = new Random();
 //			int enemyType = rnd.nextInt(3);
-//			posX = setPlace(gp, rnd, 1);
-//			posY = setPlace(gp, rnd, 2);
+			pos = setPlace(gp, rnd);
+			posX = pos[0];
+			posY = pos[1];
 //			switch(enemyType) {
 //			case 0:
 //				power = gp.getStage() * 15;
@@ -155,17 +157,22 @@ public abstract class Enemy extends Thread implements GamePiece {
 //			default:
 				power = gp.getStage() * 10;
 				hp = gp.getStage() * 170;
-				gp.addEnemy(new MaskPeople(gp,power,500,500,size, hp));
+				gp.addEnemy(new MaskPeople(gp,power,posX,posY,size, hp));
 //				break;
 			}
 		}
 		
 //	}
 	
-	private static int setPlace(GamePanel gp, Random rnd, int axis) {
+	private static int[] setPlace(GamePanel gp, Random rnd) {
+		// while no place found
 		while(true) {
-			int pos = rnd.nextInt(10)*100;
-			if(gp.availableSpawnPlace(pos, axis)) {
+			int posX = rnd.nextInt(10)*100;
+			int posY = rnd.nextInt(10)*100;
+			int pos[] = new int[2];
+			pos[0] = posX;
+			pos[1] = posY;
+			if(gp.availableSpawnPlace(pos)) {
 				return pos;
 			}
 		}
