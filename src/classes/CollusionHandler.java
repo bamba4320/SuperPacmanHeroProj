@@ -36,7 +36,14 @@ public class CollusionHandler {
 			return checkSouthWest(gp1, gp2);
 			
 		default:
-			return false;
+			return checkNorth(gp1, gp2) 
+					|| checkSouth(gp1, gp2) 
+					|| checkEast(gp1, gp2) 
+					|| checkWest(gp1, gp2) 
+					|| checkNorthWest(gp1, gp2) 
+					|| checkNorthEast(gp1, gp2) 
+					|| checkSouthEast(gp1, gp2)
+					||checkSouthWest(gp1, gp2);
 					
 		}
 				

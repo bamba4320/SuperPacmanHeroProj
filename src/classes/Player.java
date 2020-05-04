@@ -48,7 +48,7 @@ public class Player extends Thread implements GamePiece {
 		x = 450;
 		y = 850;
 		size = playerSize;
-		basePower = 50;
+		basePower = 25;
 		extraPower = 0;
 		lives = 3;
 		hp = 500;
@@ -185,8 +185,10 @@ public class Player extends Thread implements GamePiece {
 	 * make a new shot and set recoil
 	 */
 	private void makeShot() {
-		gp.addShot(new Shot(gp, x + size/4, y + size / 4, size/2, setHitPower(), setDirection()));
-		new RecoilMeter(this);
+		if(gp.enemies != null && !gp.enemies.isEmpty()) {
+			gp.addShot(new Shot(gp, x + size/4, y + size / 4, size/2, setHitPower(), setDirection()));
+			new RecoilMeter(this);
+		}
 	}
 	
 	/**

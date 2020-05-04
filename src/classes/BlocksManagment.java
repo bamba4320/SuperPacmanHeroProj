@@ -39,7 +39,7 @@ public class BlocksManagment {
 		int counter = 0;
 		while(counter < 3) {
 			int xCord = rand.nextInt(field.length - 2 / 2);
-			int yCord = rand.nextInt(field.length - 2);
+			int yCord = rand.nextInt(field.length - 3);
 			int blockForm = rand.nextInt(10);
 			switch(blockForm) {
 			

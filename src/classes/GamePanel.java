@@ -242,8 +242,26 @@ public class GamePanel extends JPanel {
 	}
 
 	public void drawEnemies(Graphics g) {
-		for (Enemy e : enemies) {
-			e.drawEnemy(g);
+		if (!enemies.isEmpty()) {
+			for (Enemy e : enemies) {
+				try {
+					if (e != null && !e.isAlive)
+						enemies.remove(e);
+				} catch (Exception ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+
+			for (Enemy e : enemies) {
+				try {
+					if (e != null && e.isAlive) {
+						e.drawEnemy(g);
+					}
+				} catch (Exception ex) {
+					System.out.println(ex.getMessage());
+
+				}
+			}
 		}
 	}
 
@@ -264,17 +282,19 @@ public class GamePanel extends JPanel {
 		// meaning, in four direction at least one free
 		for (Block b : blocks) {
 
-			if (b.x == pos[0] && b.y == pos[1] || (
-			// check if not blocked in four sides
-			// by block or screen border
-			// check left
-			((b.x == pos[0] - 100 && b.y == pos[1]) || (pos[0] - 100 < 0)) &&
-			// check right
-					((b.x == pos[0] + 100 && b.y == pos[1]) || (pos[0] + 100 > 1000)) &&
-					// check top
-					((b.x == pos[0] && b.y == pos[1] - 100) || (pos[1] - 100 < 0)) &&
-					// check bottom
-					((b.x == pos[0] && b.y == pos[1] + 100) || (pos[1] + 100 > 1000)))) {
+			// check if on exact block location
+			if (
+				b.x == pos[0] && b.y == pos[1] || (
+				// check if not blocked in four sides
+				// by block or screen border
+				// check left
+				((b.x == pos[0] - 100 && b.y == pos[1]) || (pos[0] - 100 <= 0)) &&
+				// check right
+				((b.x == pos[0] + 100 && b.y == pos[1]) || (pos[0] + 100 >= 1000)) &&
+				// check top
+				((b.x == pos[0] && b.y == pos[1] - 100) || (pos[1] - 100 <= 0)) &&
+				// check bottom
+				((b.x == pos[0] && b.y == pos[1] + 100) || (pos[1] + 100 >= 1000)))) {
 				return false;
 			}
 		}

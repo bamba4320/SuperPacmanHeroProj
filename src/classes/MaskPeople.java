@@ -56,56 +56,60 @@ public class MaskPeople extends Enemy {
 	
 	@Override
 	protected void move() {
-//			if(movmentCounter == 0) {
-//				Random rnd = new Random();
-//				directionX = rnd.nextInt(3);
-//			}
-//			switch(directionX) {
-//			case 0:
-//				// this case equal to moving right
-//				if(!checkFieldBorderEncounter(Direction.EAST) && !checkBlockEncounter(Direction.EAST)) {
-//					x+=3;
-//				}
-//				isFacingRight = true;
-//				break;
-//			case 1:
-//				// this case equal to moving left
-//				if(!checkFieldBorderEncounter(Direction.WEST) && !checkBlockEncounter(Direction.WEST)) {
-//					x-=3;
-//				}
-//				isFacingRight = false;
-//				break;
-//			case 2:
-//				// this case is for no moving on the x axis
-//				break;
-//			default:
-//				break;
-//				
-//			}
-//			if(movmentCounter == 0) {
-//				Random rnd = new Random();
-//				directionY = rnd.nextInt(3);
-//			}
-//			switch(directionY) {
-//			case 0:
-//				// this case equal to moving down
-//				if(!checkFieldBorderEncounter(Direction.SOUTH) && !checkBlockEncounter(Direction.SOUTH)) {
-//					y+=3;
-//				}
-//				break;
-//			case 1:
-//				// this case equal to moving up
-//				if(!checkFieldBorderEncounter(Direction.NORTH) && !checkBlockEncounter(Direction.NORTH)) {
-//					y-=3;
-//				}
-//				break;
-//			case 2:
-//				// this case is for no moving on the y axis
-//				break;
-//			default:
-//				break;
-//		}
+			if(movmentCounter == 0) {
+				Random rnd = new Random();
+				directionX = rnd.nextInt(3);
+			}
+			switch(directionX) {
+			case 0:
+				// this case equal to moving right
+				if(!checkFieldBorderEncounter(Direction.EAST) && !checkBlockEncounter(Direction.EAST)) {
+					x+=3;
+				}
+				isFacingRight = true;
+				break;
+			case 1:
+				// this case equal to moving left
+				if(!checkFieldBorderEncounter(Direction.WEST) && !checkBlockEncounter(Direction.WEST)) {
+					x-=3;
+				}
+				isFacingRight = false;
+				break;
+			case 2:
+				// this case is for no moving on the x axis
+				break;
+			default:
+				break;
+				
+			}
+			if(movmentCounter == 0) {
+				Random rnd = new Random();
+				directionY = rnd.nextInt(3);
+			}
+			switch(directionY) {
+			case 0:
+				// this case equal to moving down
+				if(!checkFieldBorderEncounter(Direction.SOUTH) && !checkBlockEncounter(Direction.SOUTH)) {
+					y+=3;
+				}
+				break;
+			case 1:
+				// this case equal to moving up
+				if(!checkFieldBorderEncounter(Direction.NORTH) && !checkBlockEncounter(Direction.NORTH)) {
+					y-=3;
+				}
+				break;
+			case 2:
+				// this case is for no moving on the y axis
+				break;
+			default:
+				break;
+		}
 		changeLookDirection();
+		
+		if(movmentCounter++ == 100) {
+			movmentCounter = 0;
+		}
 	}
 	
 	private void changeLookDirection() {

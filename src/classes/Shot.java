@@ -182,8 +182,21 @@ public class Shot extends Thread implements GamePiece {
 	 * @return true or false
 	 */
 	private boolean checkHitEnemy() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean hitDetected = false;
+		for(Enemy e : gp.enemies) {
+			/*
+			 * check 4 points of the shot and check if 
+			 */
+			hitDetected = CollusionHandler.DidCollusion(this, e);
+			
+			if(hitDetected) {
+				e.onHit(this.hitPower);
+				break;
+			}
+			
+		
+		}
+		return hitDetected;
 	}
 
 	/**
@@ -193,16 +206,19 @@ public class Shot extends Thread implements GamePiece {
 	private boolean checkHitBlock() {
 		boolean hitDetected = false;
 		for(Block b : gp.blocks) {
+			/*
+			 * check 4 points of the shot and check if 
+			 */
+			hitDetected = CollusionHandler.DidCollusion(this, b, movmentDirection);
+			
 			//System.out.println(String.format("block x: %d , block y: %d", b.getX(), b.getY()));
 			// if the shot has hit a wall, stop testing and end loop
+			
 			if(hitDetected) {
 				break;
 			}
 			
-			/*
-			 * check 4 points of the shot and check if 
-			 */
-				hitDetected = CollusionHandler.DidCollusion(this, b, movmentDirection);
+			
 		}
 		return hitDetected;
 	}

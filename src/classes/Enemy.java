@@ -14,6 +14,9 @@ public abstract class Enemy extends Thread implements GamePiece {
 	double hitPower;
 	double hp;
 	
+	// is enemy alive
+	boolean isAlive;
+	
 	// which way the enemy is facing
 	boolean isFacingRight;
 		
@@ -32,6 +35,7 @@ public abstract class Enemy extends Thread implements GamePiece {
 		y = initY;
 		this.size = size;
 		this.hp = hp;
+		isAlive = true;
 	}
 
 	@Override
@@ -57,6 +61,13 @@ public abstract class Enemy extends Thread implements GamePiece {
 	 */
 	protected void move(){}
 	
+	public void onHit(double hitPower) {
+		this.hp -= hitPower;
+		if(hp <= 0) {
+			isAlive = false;
+		}
+	}
+	
 	public void drawEnemy(Graphics g){
 		g.drawImage(enemyLook,x,y,size,size, null);
 	}
@@ -71,7 +82,7 @@ public abstract class Enemy extends Thread implements GamePiece {
 		while(true)
 		{
 		   try {
-//			   move();
+			   move();
 			   Thread.sleep(20);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
