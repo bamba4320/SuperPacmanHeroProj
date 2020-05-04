@@ -4,6 +4,8 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
+import Utils.LinearAlgebraClacsUtils;
+
 public class Shot extends Thread implements GamePiece { 
 	GamePanel gp;
 	Image shotLook;
@@ -15,6 +17,7 @@ public class Shot extends Thread implements GamePiece {
 	int deltay;
 	boolean isAlive;
 	Direction movmentDirection;
+	double deltaSlope;
 	
 	/**
 	 * Constractor
@@ -33,6 +36,7 @@ public class Shot extends Thread implements GamePiece {
 		size = initsize;
 		hitPower = hit;
 		movmentDirection = d;
+		deltaSlope = LinearAlgebraClacsUtils.getSlopeBetweenTwoPoints(x, y, gp.targetedEnemy.getX(), gp.targetedEnemy.getY());
 		setDelta();
 		setImage();
 		start();
@@ -50,32 +54,32 @@ public class Shot extends Thread implements GamePiece {
 			deltax=15;
 			break;
 		case NORTH_EAST:
-			deltay= -15;
 			deltax=15;
+			calcDeltaY();
 			break;
 		case NORTH:
 			deltay=15;
 			deltax=0;
 			break;
 		case NORTH_WEST:
-			deltay=-15;
 			deltax=-15;
+			calcDeltaY();
 			break;
 		case WEST:
 			deltay=0;
 			deltax=-15;
 			break;
 		case SOUTH_WEST:
-			deltay=15;
 			deltax=-15;
+			calcDeltaY();
 			break;
 		case SOUTH:
 			deltay=-15;
 			deltax=0;
 			break;
 		case SOUTH_EAST:
-			deltay=15;
 			deltax=15;
+			calcDeltaY();
 			break;
 		default:
 			deltay=0;
@@ -165,6 +169,9 @@ public class Shot extends Thread implements GamePiece {
 	
 	private void moveShot() {
 		x+=deltax;
+		if(!isDirectionOnOneAxis()) {
+			calcDeltaY();
+		}
 		y+=deltay;
 	}
 	
@@ -226,4 +233,25 @@ public class Shot extends Thread implements GamePiece {
 	public int getX() {return x;}
 	public int getY() {return y;}
 	public int getSize() {return size;}
+	
+	
+	/**
+	 * calculate the delta y value 
+	 * 15 is max px per movment
+	 */
+	private void calcDeltaY() {
+		deltay = (int) (deltaSlope * deltax);
+	}
+	
+	/**
+	 * find if shooting is on one axis
+	 * @return
+	 */
+	private boolean isDirectionOnOneAxis() {
+		return movmentDirection == Direction.EAST || 
+				movmentDirection == Direction.WEST || 
+				movmentDirection == Direction.NORTH || 
+				movmentDirection == Direction.SOUTH;
+	}
+	
 }

@@ -4,8 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import javax.swing.*;
+
+import Utils.LinearAlgebraClacsUtils;
 
 enum Direction {
 	EAST, NORTH_EAST, NORTH, NORTH_WEST, WEST, SOUTH_WEST, SOUTH, SOUTH_EAST, ALL
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel {
 	int movementDetectorsCounter;
 	Sidebar sidebar;
 	int stage;
+	Enemy targetedEnemy;
 
 	/**
 	 * Constractor
@@ -48,6 +50,8 @@ public class GamePanel extends JPanel {
 		isMoved = false;
 		movementDetectorsCounter = 0;
 		sidebar = new Sidebar(this);
+		// get closest enemy index to target
+		initTargetedEnemy();
 		addKeyListener(new KL());
 		setFocusable(true);
 		setPreferredSize(new Dimension(1000, 1000));
@@ -60,7 +64,7 @@ public class GamePanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);
-
+			checkTargetEnemy();
 			g.drawImage(backGroundImage, 0, 0, getWidth(), getHeight(), null);
 			drawBlocks(g);
 			player.drawPlayer(g);
@@ -224,23 +228,28 @@ public class GamePanel extends JPanel {
 	public void startMovementDetector() {
 		new MovementDetector(this);
 	}
-
+	
+	
+	// update moving detector
 	public void movementDetectCounterUpdate(boolean add) {
 		movementDetectorsCounter += add ? 1 : -1;
 		if (movementDetectorsCounter < 0)
 			movementDetectorsCounter = 0;
 	}
 
+	// set is moved
 	public void setIsMoved(boolean val) throws InterruptedException {
 		movementDetectorsCounter = val ? movementDetectorsCounter : 0;
 		isMoved = val || player.moveDown || player.moveLeft || player.moveRight || player.moveUp;
 
 	}
 
+	// add new enemy
 	public void addEnemy(Enemy e) {
 		enemies.add(e);
 	}
 
+	// draw all enemies
 	public void drawEnemies(Graphics g) {
 		if (!enemies.isEmpty()) {
 			for (Enemy e : enemies) {
@@ -265,6 +274,7 @@ public class GamePanel extends JPanel {
 		}
 	}
 
+	// get current stage
 	public int getStage() {
 		return stage;
 	}
@@ -301,6 +311,39 @@ public class GamePanel extends JPanel {
 		return true;
 	}
 
+	/**
+	 * find the closest enemy to the player location and set it as target
+	 * */
+	public void initTargetedEnemy() {
+		int index = 0;
+		int minimumIndex = 0;
+		int mininumDistance = 100000;
+		if(!enemies.isEmpty()) {
+			for(Enemy e : enemies) {
+				if(e.isAlive) {
+					int currentDistance = 
+							(int) LinearAlgebraClacsUtils.getDistanceBetweenTwoPoints(
+									player.getX(), player.getY(), e.getX(), e.getY());
+					if(currentDistance < mininumDistance) {
+						mininumDistance = currentDistance;
+						minimumIndex = index;
+					}
+				}
+				index++;
+			}
+			targetedEnemy = enemies.get(minimumIndex);
+			System.out.println("targeted enemy at index " + minimumIndex);
+		}
+	}
+	
+	// check if the target enemy is alive
+	public void checkTargetEnemy() {
+		if(!targetedEnemy.isAlive) {
+			initTargetedEnemy();
+		}
+	}
+	
+	
 	/**
 	 * main program function. program starts here.
 	 * 

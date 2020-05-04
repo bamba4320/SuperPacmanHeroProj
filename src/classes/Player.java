@@ -185,7 +185,7 @@ public class Player extends Thread implements GamePiece {
 	 * make a new shot and set recoil
 	 */
 	private void makeShot() {
-		if(gp.enemies != null && !gp.enemies.isEmpty()) {
+		if(gp.enemies != null && !gp.enemies.isEmpty() && gp.targetedEnemy != null) {
 			gp.addShot(new Shot(gp, x + size/4, y + size / 4, size/2, setHitPower(), setDirection()));
 			new RecoilMeter(this);
 		}
@@ -201,15 +201,103 @@ public class Player extends Thread implements GamePiece {
 	
 	/**
 	 * set the direction of the new shot.
-	 * at next dev stage will calculate direction by finding 
-	 * the differences between player and enemy positions.
 	 * @return Direction enum value;
 	 */
 	private Direction setDirection() {
-		if(isFacingRight) {
-			return Direction.EAST;
+		// check x-axis:
+		// right to player, left to player or same as player x coordinate.
+		// if player facing wrong way, flip his direction.
+		
+		// x-axis delta
+		int deltaX = this.getX() - gp.targetedEnemy.getX();
+	
+		// y-axis delta
+		int deltaY = this.getY() - gp.targetedEnemy.getY();
+ 		
+		// if needs to face east - right
+		if(deltaX < -50) {
+			
+			// flip player to right
+			this.flipPlayer(true);
+			
+			// check y-axis:
+			// top to player, bottom to player or same as player y coordinate.
+			
+			// if needs to face north - up
+			if(deltaY > 50) {
+				// set direction to north-east
+				return Direction.NORTH_EAST;
+				
+			}else {
+				// if needs to face south - down
+				if(deltaY < -50) {
+					// set direction to south-east
+					return Direction.SOUTH_EAST;
+					
+				}else {
+					// y coordinates are equals, shot is horizontal
+					// set direction to east
+					return Direction.EAST;
+				}
+			}
+			
+		}else {
+			// if needs to face west - left
+			if(deltaX > 50) {
+				// flip player to right
+				this.flipPlayer(false);
+				
+				// check y-axis:
+				// top to player, bottom to player or same as player y coordinate.
+				
+				// if needs to face north - up
+				if(deltaY > 50) {
+					// set direction to north-west
+					return Direction.NORTH_WEST;
+					
+				}else {
+					// if needs to face south - down
+					if(deltaY < -50) {
+						// set direction to south-west
+						return Direction.SOUTH_WEST;
+						
+					}else {
+						// y coordinates are equals, shot is horizontal
+						// set direction to west
+						return Direction.WEST;
+					}
+				}
+				
+			}else {
+				// x coordinates are equals, facing is not important, shot is vertical
+				
+				// check y-axis:
+				// top to player, bottom to player or same as player y coordinate.
+				
+				// if needs to face north - up
+				if(deltaY < 0) {
+					// set direction to north
+					return Direction.NORTH;
+					
+				}else {
+					// if needs to face south - down
+					if(deltaY > 0) {
+						// set direction to south
+						return Direction.SOUTH;
+						
+					}else {
+						// y coordinates are equals, 
+						// enemy is at same place as player.
+						
+						// as default, set direction to north
+						return Direction.NORTH;
+					}
+				}
+			}
 		}
-		return Direction.WEST; 	
+		
+		
+	
 	}
 	
 	/**

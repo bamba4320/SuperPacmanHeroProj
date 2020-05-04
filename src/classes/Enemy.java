@@ -1,12 +1,8 @@
 package classes;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
 
 public abstract class Enemy extends Thread implements GamePiece {
 	
