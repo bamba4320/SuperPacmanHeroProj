@@ -159,12 +159,22 @@ public class GamePanel extends JPanel {
 		public void keyPressed(KeyEvent e) {
 
 			int code = e.getKeyCode();
-			if (!movementKeyPressed.contains(code)) {
-				movementKeyPressed.add(code);
+			
+			// change target
+			if(code == KeyEvent.VK_F) {
+				initTargetedEnemy();
+			}else {			
+				// pause menu
+				if(code == KeyEvent.VK_ESCAPE) {
+					
+				}else {
+					// movement keys
+					if (!movementKeyPressed.contains(code)) {
+						movementKeyPressed.add(code);
+					}
+					checkMovement();
+				}	
 			}
-
-			checkMovement();
-
 		}
 
 		private void checkMovement() {
@@ -308,7 +318,7 @@ public class GamePanel extends JPanel {
 				return false;
 			}
 		}
-		return true;
+		return (pos[0] != player.getX() && pos[1] != player.getY());
 	}
 
 	/**
@@ -332,7 +342,6 @@ public class GamePanel extends JPanel {
 				index++;
 			}
 			targetedEnemy = enemies.get(minimumIndex);
-			System.out.println("targeted enemy at index " + minimumIndex);
 		}
 	}
 	

@@ -38,8 +38,11 @@ public class BlocksManagment {
 		Random rand = new Random();
 		int counter = 0;
 		while(counter < 3) {
-			int xCord = rand.nextInt((field.length - 3 / 2) + 1);
-			int yCord = rand.nextInt(field.length - 3);
+			int xCord = rand.nextInt((field.length - 2 / 2));
+			if(xCord == 0) {
+				xCord = 1;
+			}
+			int yCord = rand.nextInt(field.length - 2);
 			int blockForm = rand.nextInt(10);
 			switch(blockForm) {
 			
@@ -54,11 +57,11 @@ public class BlocksManagment {
 				//             *
 				
 				if(field[xCord][yCord] == null 
-					&& xCord - 1 > -1 
+					&& xCord - 1 > 0 
 					&& field[xCord - 1][yCord] == null
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null
-					&& yCord + 1 < field.length
+					&& yCord + 1 < field.length - 2
 					&& field[xCord][yCord + 1] == null
 					&& xCord - 1 != 4 
 					&& xCord + 1 != 5
@@ -85,7 +88,7 @@ public class BlocksManagment {
 				if(field[xCord][yCord] == null 
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null
-					&& yCord + 1 < field.length 
+					&& yCord + 1 < field.length - 2
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1
 					&& field[xCord][yCord - 1] == null
@@ -112,9 +115,9 @@ public class BlocksManagment {
 				//  		   *
 				
 				if(field[xCord][yCord] == null 
-					&& xCord - 1 > -1
+					&& xCord - 1 > 0
 					&& field[xCord - 1][yCord] == null
-					&& yCord + 1 < field.length  
+					&& yCord + 1 < field.length - 2  
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1 
 					&& field[xCord][yCord - 1] == null
@@ -140,7 +143,7 @@ public class BlocksManagment {
 				//           * * *
 				
 				if(field[xCord][yCord] == null 
-					&& xCord - 1 > -1 
+					&& xCord - 1 > 0
 					&& field[xCord - 1][yCord] == null
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null
@@ -168,13 +171,13 @@ public class BlocksManagment {
 				//             *
 				
 				if(field[xCord][yCord] == null 
-					&& xCord - 1 > -1 
+					&& xCord - 1 > 0
 					&& field[xCord - 1][yCord] == null
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null
 					&& yCord - 1 > -1  
 					&& field[xCord][yCord - 1] == null
-					&& yCord + 1 < 10 
+					&& yCord + 1 < field.length - 2 
 					&& field[xCord][yCord + 1] == null
 					&& xCord - 1 != 4 
 					&& xCord + 1 != 5
@@ -197,7 +200,7 @@ public class BlocksManagment {
 				// form of:  * * * 
 				
 				if(field[xCord][yCord] == null 
-					&& xCord - 1 > -1 
+					&& xCord - 1 > 0 
 					&& field[xCord - 1][yCord] == null
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord] == null 
@@ -223,7 +226,7 @@ public class BlocksManagment {
 				//             *
 				
 				if(field[xCord][yCord] == null 
-					&& yCord + 1 < field.length
+					&& yCord + 1 < field.length - 2
 					&& field[xCord][yCord + 1] == null
 					&& yCord - 1 > -1 
 					&& field[xCord][yCord - 1] == null
@@ -250,7 +253,7 @@ public class BlocksManagment {
 				//               *
 				
 				if(field[xCord][yCord] == null 
-					&& yCord + 1 < field.length
+					&& yCord + 1 < field.length - 2
 					&& xCord + 1 < field.length / 2 
 					&& field[xCord + 1][yCord + 1] == null
 					&& yCord - 1 > -1 
@@ -280,7 +283,7 @@ public class BlocksManagment {
 					&& yCord - 1 > -1
 					&& xCord + 1 < field.length / 2 
 					&& field[xCord + 1][yCord - 1] == null
-					&& yCord + 1 < field.length 
+					&& yCord + 1 < field.length - 2
 					&& xCord - 1 > -1
 					&& field[xCord - 1][yCord + 1] == null
 					&& xCord - 1 != 4 
@@ -310,8 +313,8 @@ public class BlocksManagment {
 					&& yCord - 1 > -1 
 					&& xCord + 1 < field.length / 2
 					&& field[xCord + 1][yCord - 1] == null
-					&& yCord + 1 < field.length 
-					&& xCord - 1 > -1
+					&& yCord + 1 < field.length - 2
+					&& xCord - 1 > 0
 					&& field[xCord - 1][yCord + 1] == null 
 					&& field[xCord + 1][yCord + 1] == null
 					&& field[xCord - 1][yCord - 1] == null
