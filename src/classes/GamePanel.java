@@ -33,6 +33,7 @@ public class GamePanel extends JPanel {
 	Sidebar sidebar;
 	int stage;
 	Enemy targetedEnemy;
+	LevelPassDoor door;
 
 	/**
 	 * Constractor
@@ -50,6 +51,7 @@ public class GamePanel extends JPanel {
 		isMoved = false;
 		movementDetectorsCounter = 0;
 		sidebar = new Sidebar(this);
+		door = new LevelPassDoor(this);
 		// get closest enemy index to target
 		initTargetedEnemy();
 		addKeyListener(new KL());
@@ -67,6 +69,7 @@ public class GamePanel extends JPanel {
 			checkTargetEnemy();
 			g.drawImage(backGroundImage, 0, 0, getWidth(), getHeight(), null);
 			drawBlocks(g);
+			drawDoor(g);
 			player.drawPlayer(g);
 			drawShots(g);
 			drawEnemies(g);
@@ -283,12 +286,35 @@ public class GamePanel extends JPanel {
 			}
 		}
 	}
+	
+	public void drawDoor(Graphics g) {
+		if(enemies != null && enemies.isEmpty()) {
+			door.drawDoor(g);
+		}
+	}
 
 	// get current stage
 	public int getStage() {
 		return stage;
 	}
 
+	/**
+	 * organize field to next level
+	 * spawn new enemies and reset player game
+	 */
+	public void nextLevel() {
+		this.stage++;
+		Enemy.initEnemies(this);
+		isMoved = false;
+		movementDetectorsCounter = 0;
+		shots.clear();
+		// get closest enemy index to target
+		initTargetedEnemy();
+		player.readyToNewLevel();
+	}
+	
+	
+	
 	/**
 	 * check if a position is OK to spawn enemy
 	 * 
@@ -351,7 +377,6 @@ public class GamePanel extends JPanel {
 			initTargetedEnemy();
 		}
 	}
-	
 	
 	/**
 	 * main program function. program starts here.

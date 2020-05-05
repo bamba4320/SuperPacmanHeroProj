@@ -40,7 +40,6 @@ public class Shot extends Thread implements GamePiece {
 		setDelta();
 		setImage();
 		start();
-//		System.out.println(String.format("x: %d, y:%d",x,y));
 	}
 	
 	/**
@@ -131,7 +130,7 @@ public class Shot extends Thread implements GamePiece {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		while(true)
+		while(gp.player.isAlive)
 		{
 		
 		   try {

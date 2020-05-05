@@ -75,7 +75,7 @@ public abstract class Enemy extends Thread implements GamePiece {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		while(true)
+		while(gp.player.isAlive)
 		{
 		   try {
 			   move();
@@ -144,7 +144,10 @@ public abstract class Enemy extends Thread implements GamePiece {
 		double hp;
 		int[] pos;
 		
-		for(int i = 0; i<5; i++) {
+		gp.enemies.clear();
+		int enemiesNumber = 5 + gp.getStage() * 5 / 4;
+		
+		for(int i = 0; i < enemiesNumber; i++) {
 			Random rnd = new Random();
 //			int enemyType = rnd.nextInt(3);
 			pos = setPlace(gp, rnd);

@@ -257,7 +257,7 @@ public class BlocksManagment {
 					&& xCord + 1 < field.length / 2 
 					&& field[xCord + 1][yCord + 1] == null
 					&& yCord - 1 > -1 
-					&& xCord - 1 > -1
+					&& xCord - 1 > 0
 					&& field[xCord - 1][yCord - 1] == null
 					&& xCord - 1 != 4 
 					&& xCord + 1 != 5
@@ -284,7 +284,7 @@ public class BlocksManagment {
 					&& xCord + 1 < field.length / 2 
 					&& field[xCord + 1][yCord - 1] == null
 					&& yCord + 1 < field.length - 2
-					&& xCord - 1 > -1
+					&& xCord - 1 > 0
 					&& field[xCord - 1][yCord + 1] == null
 					&& xCord - 1 != 4 
 					&& xCord + 1 != 5

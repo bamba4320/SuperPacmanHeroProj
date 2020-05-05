@@ -11,7 +11,6 @@ public class MovementDetector extends Thread {
 	
 	public void run() {
 		try {
-				System.out.println("starting");
 				gp.movementDetectCounterUpdate(true);
 				gp.setIsMoved(true);
 				Thread.sleep(700);

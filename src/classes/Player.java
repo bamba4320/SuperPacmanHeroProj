@@ -30,15 +30,17 @@ public class Player extends Thread implements GamePiece {
 	
 	// player health points
 	double hp;
-	
-	// how many tries the player has until game over
-	int lives;
+	double baseHP;
+	double bonusHP;
 	
 	// does the player able to shoot
 	boolean recoilTime;
 	
 	// movement direction
 	boolean moveUp, moveDown, moveRight, moveLeft;
+	
+	// is player alive
+	boolean isAlive;
 	
 	/**
 	 * Player class constructor
@@ -50,8 +52,10 @@ public class Player extends Thread implements GamePiece {
 		size = playerSize;
 		basePower = 25;
 		extraPower = 0;
-		lives = 3;
-		hp = 500;
+		baseHP = 500;
+		bonusHP = 0;
+		hp = baseHP + bonusHP;
+		isAlive = true;
 		isFacingRight = true;
 		recoilTime = false;
 		moveUp = false;
@@ -134,21 +138,27 @@ public class Player extends Thread implements GamePiece {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		while(true)
+		while(isAlive)
 		{
 		   try {
 			   calcMovement();
+			   checkEnemyEncounter();
 			   Thread.sleep(20);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			 e.printStackTrace();
 		    }
+		   	
+		   	if(!isAlive) {
+		   		System.out.println("you are dead");
+		   	}
 		    
 		    if(!didMoved()) {
 		    	if(!recoilTime) {
 		    		makeShot();
 		    	}
 		    }
+		    checkIsAlive();
 			gp.repaint();
 		}
 	}
@@ -370,6 +380,46 @@ public class Player extends Thread implements GamePiece {
 		if(moveDown)  updateY( 3);
 		if(moveLeft)  updateX(-3);
 		if(moveRight) updateX( 3); 
+	}
+	
+	/**
+	 * check if had collision with enemy
+	 * if does, drop hp
+	 */
+	private void checkEnemyEncounter() {
+		// verify that there are enemies
+		if( gp.enemies != null && !gp.enemies.isEmpty()) {
+			for(Enemy e : gp.enemies) {
+				// verify enemy is alive
+				if(e != null && e.isAlive) {
+					// check if enemy x coordinates are as player
+					// max of half body each side
+					if(e.getX() + (e.getSize()/2) >= getX() && e.getX() <= getX() + (getSize()/2) ) {
+						// if true, check y coordinates - max of half body
+						if(e.getY() + (e.getSize()/2) >= getY() && e.getY() <= getY() + (getSize()/2) ) {
+							// if true, then there is collision
+							hp -= e.hitPower;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * check if player still alive
+	 */
+	private void checkIsAlive() {
+		isAlive = hp > 0;
+	}
+	
+	public void readyToNewLevel() {
+		x = 450;
+		y = 850;
+		basePower *= 1.2;
+		baseHP *= 1.2;
+		hp *= 1.5; 
+		
 	}
 
 }
