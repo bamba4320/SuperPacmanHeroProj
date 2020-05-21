@@ -50,10 +50,11 @@ public class GamePanel extends JPanel {
 		Enemy.initEnemies(this);
 		isMoved = false;
 		movementDetectorsCounter = 0;
-		sidebar = new Sidebar(this);
-		door = new LevelPassDoor(this);
 		// get closest enemy index to target
 		initTargetedEnemy();
+		sidebar = new Sidebar(this);
+		sidebar.initTargetEnemyHpBar(targetedEnemy);
+		door = new LevelPassDoor(this);
 		addKeyListener(new KL());
 		setFocusable(true);
 		setPreferredSize(new Dimension(1000, 1000));
@@ -269,6 +270,7 @@ public class GamePanel extends JPanel {
 				try {
 					if (e != null && !e.isAlive)
 						enemies.remove(e);
+						sidebar.onEnemyDies();
 				} catch (Exception ex) {
 					System.out.println(ex.getMessage());
 				}
@@ -311,6 +313,8 @@ public class GamePanel extends JPanel {
 		// get closest enemy index to target
 		initTargetedEnemy();
 		player.readyToNewLevel();
+		sidebar.setEnemyWaveMax(enemies.size());
+		
 	}
 	
 	
@@ -368,6 +372,9 @@ public class GamePanel extends JPanel {
 				index++;
 			}
 			targetedEnemy = enemies.get(minimumIndex);
+			if(sidebar != null) {
+				sidebar.initTargetEnemyHpBar(targetedEnemy);
+			}
 		}
 	}
 	

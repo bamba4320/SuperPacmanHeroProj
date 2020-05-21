@@ -399,6 +399,7 @@ public class Player extends Thread implements GamePiece {
 						if(e.getY() + (e.getSize()/2) >= getY() && e.getY() <= getY() + (getSize()/2) ) {
 							// if true, then there is collision
 							hp -= e.hitPower;
+							gp.sidebar.onPlayerHit();
 						}
 					}
 				}
@@ -413,6 +414,7 @@ public class Player extends Thread implements GamePiece {
 		isAlive = hp > 0;
 	}
 	
+	
 	public void readyToNewLevel() {
 		x = 450;
 		y = 850;
@@ -420,6 +422,15 @@ public class Player extends Thread implements GamePiece {
 		baseHP *= 1.2;
 		hp *= 1.5; 
 		
+		gp.sidebar.onNewLevel(getMaximumHp(), hp);
+		
 	}
-
+	
+	public double getCurrentHp() {
+		return hp;
+	}
+	
+	public double getMaximumHp() {
+		return baseHP + bonusHP; 
+	}
 }

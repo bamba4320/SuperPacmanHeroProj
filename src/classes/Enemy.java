@@ -9,7 +9,7 @@ public abstract class Enemy extends Thread implements GamePiece {
 	GamePanel gp;
 	double hitPower;
 	double hp;
-	
+	double fullHp;
 	// is enemy alive
 	boolean isAlive;
 	
@@ -31,6 +31,7 @@ public abstract class Enemy extends Thread implements GamePiece {
 		y = initY;
 		this.size = size;
 		this.hp = hp;
+		this.fullHp = hp;
 		isAlive = true;
 	}
 
@@ -59,9 +60,15 @@ public abstract class Enemy extends Thread implements GamePiece {
 	
 	public void onHit(double hitPower) {
 		this.hp -= hitPower;
+		
+		if(gp.sidebar != null && gp.targetedEnemy.equals(this)) {
+			gp.sidebar.initTargetEnemyHpBar(this);
+		}
+		
 		if(hp <= 0) {
 			isAlive = false;
 		}
+		
 	}
 	
 	public void drawEnemy(Graphics g){
@@ -186,6 +193,14 @@ public abstract class Enemy extends Thread implements GamePiece {
 				return pos;
 			}
 		}
+	}
+	
+	public double getCurrentHp() {
+		return hp;
+	}
+	
+	public double getMaximumHp() {
+		return fullHp;
 	}
 
 }

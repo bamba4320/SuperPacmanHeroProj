@@ -54,7 +54,7 @@ public class Shot extends Thread implements GamePiece {
 			break;
 		case NORTH_EAST:
 			deltax=15;
-			calcDeltaY();
+			deltay = -15;
 			break;
 		case NORTH:
 			deltay=15;
@@ -62,7 +62,7 @@ public class Shot extends Thread implements GamePiece {
 			break;
 		case NORTH_WEST:
 			deltax=-15;
-			calcDeltaY();
+			deltay = -15;
 			break;
 		case WEST:
 			deltay=0;
@@ -70,7 +70,7 @@ public class Shot extends Thread implements GamePiece {
 			break;
 		case SOUTH_WEST:
 			deltax=-15;
-			calcDeltaY();
+			deltay =15;
 			break;
 		case SOUTH:
 			deltay=-15;
@@ -78,7 +78,7 @@ public class Shot extends Thread implements GamePiece {
 			break;
 		case SOUTH_EAST:
 			deltax=15;
-			calcDeltaY();
+			deltay =15;
 			break;
 		default:
 			deltay=0;
@@ -168,9 +168,6 @@ public class Shot extends Thread implements GamePiece {
 	
 	private void moveShot() {
 		x+=deltax;
-		if(!isDirectionOnOneAxis()) {
-			calcDeltaY();
-		}
 		y+=deltay;
 	}
 	
@@ -232,25 +229,5 @@ public class Shot extends Thread implements GamePiece {
 	public int getX() {return x;}
 	public int getY() {return y;}
 	public int getSize() {return size;}
-	
-	
-	/**
-	 * calculate the delta y value 
-	 * 15 is max px per movment
-	 */
-	private void calcDeltaY() {
-		deltay = (int) (deltaSlope * deltax);
-	}
-	
-	/**
-	 * find if shooting is on one axis
-	 * @return
-	 */
-	private boolean isDirectionOnOneAxis() {
-		return movmentDirection == Direction.EAST || 
-				movmentDirection == Direction.WEST || 
-				movmentDirection == Direction.NORTH || 
-				movmentDirection == Direction.SOUTH;
-	}
 	
 }
