@@ -45,7 +45,7 @@ public class LevelPassDoor extends Thread implements GamePiece {
 	
 	public void checkPlayerGotIN() {
 		if(gp.enemies != null && gp.enemies.isEmpty()) {
-			if(gp.player.getX() == x && gp.player.getY() <= (y + size)/2) {
+			if(gp.player.getX() >= x && gp.player.getX() <= x+(size/2) && gp.player.getY() <= (y + size)/2) {
 				gp.nextLevel();
 			}
 		}

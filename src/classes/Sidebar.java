@@ -17,6 +17,7 @@ public class Sidebar extends JPanel {
 		setBackground(Color.black);
 		
 		levelEnemyCount = gp.enemies.size();
+	
 		
 		enemyWaveCountBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, gp.enemies.size());
 		enemyWaveCountBar.setValue(gp.enemies.size());
