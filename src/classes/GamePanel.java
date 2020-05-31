@@ -34,6 +34,8 @@ public class GamePanel extends JPanel {
 	int stage;
 	Enemy targetedEnemy;
 	LevelPassDoor door;
+	
+	boolean isPaused;
 
 	/**
 	 * Constractor
@@ -58,6 +60,7 @@ public class GamePanel extends JPanel {
 		addKeyListener(new KL());
 		setFocusable(true);
 		setPreferredSize(new Dimension(1000, 1000));
+		isPaused = false;
 
 	}
 
@@ -74,12 +77,29 @@ public class GamePanel extends JPanel {
 			player.drawPlayer(g);
 			drawShots(g);
 			drawEnemies(g);
+			if (isPaused == true)
+	          {
+	            g.setColor(new Color (255,255,255,80));
+	            g.fillRect(0, 0, getWidth(), getHeight());
+	            Font myFont = new Font("Ariel", Font.BOLD, 72);
+	            g.setFont(myFont);
+	            g.setColor(Color.red);
+	            g.drawString("PAUSE",getWidth()/2 - 50,getHeight()/2);
+	          }
+			if(!player.isAlive) {
+				g.setColor(new Color (255,255,255,80));
+	            g.fillRect(0, 0, getWidth(), getHeight());
+	            Font myFont = new Font("Ariel", Font.BOLD, 72);
+	            g.setFont(myFont);
+	            g.setColor(Color.black);
+	            g.drawString("GAME OVER!!!",getWidth()/2 - 200,getHeight()/2);
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
 	}
-
+	
 	/**
 	 * draw all live shots
 	 * 
@@ -170,6 +190,7 @@ public class GamePanel extends JPanel {
 			}else {			
 				// pause menu
 				if(code == KeyEvent.VK_ESCAPE) {
+					isPaused = !isPaused;
 					
 				}else {
 					// movement keys
@@ -382,46 +403,6 @@ public class GamePanel extends JPanel {
 	public void checkTargetEnemy() {
 		if(!targetedEnemy.isAlive) {
 			initTargetedEnemy();
-		}
-	}
-	
-	/**
-	 * main program function. program starts here.
-	 * 
-	 * @param args execute arguments
-	 */
-	public static void main(String[] args) {
-		JFrame f = new JFrame("Super Pacman Hero ver 0.9 2019 (c)");
-		JPanel container = new JPanel();
-		JPanel sidebarContainer = new JPanel();
-		JPanel gamePanelContainer = new JPanel();
-		GamePanel gp = new GamePanel();
-
-		sidebarContainer.setPreferredSize(new Dimension(500, 1050));
-		sidebarContainer.setBackground(Color.darkGray);
-		sidebarContainer.add(gp.getSidebar(), BorderLayout.CENTER);
-
-		gamePanelContainer.setPreferredSize(new Dimension(1050, 1050));
-		gamePanelContainer.setBackground(new Color(51, 51, 51));
-		gamePanelContainer.add(gp, BorderLayout.NORTH);
-
-		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
-		container.add(gamePanelContainer);
-		container.add(sidebarContainer);
-
-		f.add(container);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1550, 1050);
-		f.setResizable(false);
-		f.setVisible(true);
-		f.setFocusable(false);
-		gp.hideMouseCursor();
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }

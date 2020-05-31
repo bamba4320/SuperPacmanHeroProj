@@ -22,6 +22,10 @@ public class LinearAlgebraClacsUtils {
 	 * @return double value
 	 */
 	public static double getSlopeBetweenTwoPoints(int x1, int y1, int x2, int y2) {
-		return (y2 - y1) / (x2 - x1);
+		try {
+			return (y2 - y1) / (x2 - x1);
+		}catch(Exception ex) {
+			return 0;
+		}
 	}
 }

@@ -81,18 +81,26 @@ public abstract class Enemy extends Thread implements GamePiece {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		while(gp.player.isAlive)
 		{
 		   try {
-			   move();
+			   if(!gp.isPaused) {
+				   move();
+			   }
 			   Thread.sleep(20);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			 e.printStackTrace();
 		    }
-		    
-			gp.repaint();
+		   if(!gp.isPaused) {
+			   gp.repaint();
+		   }
 		}
 	}
 	
@@ -152,7 +160,7 @@ public abstract class Enemy extends Thread implements GamePiece {
 		int[] pos;
 		
 		gp.enemies.clear();
-		int enemiesNumber = 5 + gp.getStage() * 5 / 4;
+		int enemiesNumber = 5;
 		
 		for(int i = 0; i < enemiesNumber; i++) {
 			Random rnd = new Random();
@@ -172,8 +180,8 @@ public abstract class Enemy extends Thread implements GamePiece {
 //				gp.addEnemy(new Ghost(gp,power,posX,posY,size, hp));
 //				break;
 //			default:
-				power = gp.getStage() * 10;
-				hp = gp.getStage() * 170;
+				power = gp.getStage() * 1;
+				hp = gp.getStage() * 100;
 				gp.addEnemy(new MaskPeople(gp,power,posX,posY,size, hp));
 //				break;
 			}

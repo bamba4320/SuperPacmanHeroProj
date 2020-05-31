@@ -137,12 +137,19 @@ public class Player extends Thread implements GamePiece {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		while(isAlive)
 		{
 		   try {
-			   calcMovement();
-			   checkEnemyEncounter();
+			   if(!gp.isPaused) {
+				   calcMovement();
+				   checkEnemyEncounter();
+			   }
 			   Thread.sleep(20);
 		      } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -153,14 +160,19 @@ public class Player extends Thread implements GamePiece {
 		   		System.out.println("you are dead");
 		   	}
 		    
-		    if(!didMoved()) {
-		    	if(!recoilTime) {
-		    		makeShot();
-		    	}
+		    if(!gp.isPaused) {
+			    if(!didMoved()) {
+			    	if(!recoilTime) {
+			    		makeShot();
+			    	}
+			    }
+			    checkIsAlive();
+			    
 		    }
-		    checkIsAlive();
-			gp.repaint();
+		    gp.repaint();
+			
 		}
+		
 	}
 	
 	public void drawPlayer(Graphics g){
@@ -394,9 +406,9 @@ public class Player extends Thread implements GamePiece {
 				if(e != null && e.isAlive) {
 					// check if enemy x coordinates are as player
 					// max of half body each side
-					if(e.getX() + (e.getSize()/2) >= getX() && e.getX() <= getX() + (getSize()/2) ) {
+					if(e.getX() + (e.getSize()) >= getX() && e.getX() <= getX() + (getSize())) {
 						// if true, check y coordinates - max of half body
-						if(e.getY() + (e.getSize()/2) >= getY() && e.getY() <= getY() + (getSize()/2) ) {
+						if(e.getY() + (e.getSize()) >= getY() && e.getY() <= getY() + (getSize())) {
 							// if true, then there is collision
 							hp -= e.hitPower;
 							gp.sidebar.onPlayerHit();

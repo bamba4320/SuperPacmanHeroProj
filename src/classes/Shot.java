@@ -139,14 +139,17 @@ public class Shot extends Thread implements GamePiece {
 			// TODO Auto-generated catch block
 		    	  e.printStackTrace();
 		    }
-		   	if(doKillShot()) {
-		   		isAlive = false;
-		   		break;
-		   	} else {
-		   		moveShot();
-		   	}
+		   if(!gp.isPaused) {
+			   	if(doKillShot()) {
+			   		isAlive = false;
+			   		break;
+			   	} else {
+			   		moveShot();
+			   	}
+			   	gp.repaint();
+		   }
 			
-			gp.repaint();
+			
 		}	
 	}
 	
